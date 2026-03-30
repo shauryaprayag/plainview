@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Editorial Policy — Plainview</title>
+<meta name="description" content="How Plainview sources, verifies, and presents candidate information. Our commitment to accuracy, neutrality, and transparency.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+
+/* ── PAGE HERO ── */
+.page-hero {
+  background: var(--char);
+  padding: 48px 24px 52px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.page-hero-inner { max-width: 680px; margin: 0 auto; }
+
+.page-eyebrow {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--terra);
+  margin-bottom: 12px;
+}
+.page-title {
+  font-family: var(--font-d);
+  font-size: 34px;
+  color: #FAF4EC;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin-bottom: 14px;
+}
+.page-lead {
+  font-size: 14px;
+  color: rgba(250,244,236,0.55);
+  line-height: 1.75;
+  max-width: 560px;
+}
+
+/* ── CONTENT ── */
+.content-wrap {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 52px 24px;
+}
+
+.content-section { margin-bottom: 48px; }
+.content-section:last-child { margin-bottom: 0; }
+
+.section-eyebrow {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--terra);
+  margin-bottom: 8px;
+}
+.section-h {
+  font-family: var(--font-d);
+  font-size: 22px;
+  color: var(--char);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin-bottom: 14px;
+}
+.section-body {
+  font-size: 14px;
+  color: rgba(17,24,39,0.7);
+  line-height: 1.8;
+}
+.section-body p { margin-bottom: 14px; }
+.section-body p:last-child { margin-bottom: 0; }
+
+.divider {
+  height: 0.5px;
+  background: var(--sand);
+  margin: 48px 0;
+}
+
+/* ── SOURCE TABLE ── */
+.source-table {
+  margin-top: 20px;
+  border: 0.5px solid rgba(46,42,38,0.12);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.source-head {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  background: rgba(46,42,38,0.04);
+  border-bottom: 0.5px solid rgba(46,42,38,0.1);
+  padding: 10px 16px;
+}
+.source-head span {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(46,42,38,0.4);
+}
+.source-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  padding: 12px 16px;
+  border-bottom: 0.5px solid rgba(46,42,38,0.07);
+  align-items: start;
+  gap: 8px;
+}
+.source-row:last-child { border-bottom: none; }
+.source-row:nth-child(even) { background: rgba(232,216,196,0.12); }
+.source-name {
+  font-family: var(--font-m);
+  font-size: 11px;
+  color: var(--char);
+  font-weight: 400;
+}
+.source-use {
+  font-size: 12px;
+  color: rgba(17,24,39,0.65);
+  line-height: 1.5;
+}
+.source-type {
+  font-size: 11px;
+  color: rgba(46,42,38,0.45);
+  line-height: 1.5;
+}
+
+/* ── RULES LIST ── */
+.rules-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 20px;
+}
+.rule-item {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+.rule-num {
+  font-family: var(--font-d);
+  font-size: 18px;
+  color: rgba(196,99,58,0.3);
+  font-weight: 700;
+  flex-shrink: 0;
+  line-height: 1.3;
+  min-width: 24px;
+}
+.rule-body {}
+.rule-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--char);
+  margin-bottom: 3px;
+}
+.rule-desc {
+  font-size: 13px;
+  color: rgba(17,24,39,0.62);
+  line-height: 1.65;
+}
+
+/* ── EXAMPLES ── */
+.example-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: rgba(46,42,38,0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 20px;
+}
+.example-col {}
+.example-col-head {
+  padding: 10px 16px;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-bottom: 0.5px solid rgba(46,42,38,0.1);
+}
+.example-col-head.write { background: #CCDFD4; color: #1A3C28; }
+.example-col-head.not   { background: #F0D8CC; color: #501E10; }
+.example-body { background: #FFFDF9; }
+.example-item {
+  padding: 12px 16px;
+  font-size: 12px;
+  line-height: 1.6;
+  border-bottom: 0.5px solid rgba(46,42,38,0.06);
+}
+.example-item:last-child { border-bottom: none; }
+.example-item.not { color: rgba(46,42,38,0.38); text-decoration: line-through; text-decoration-color: rgba(196,99,58,0.4); }
+.example-item.write { color: rgba(17,24,39,0.72); }
+
+/* ── CORRECTION PROCESS ── */
+.process-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: 20px;
+  border: 0.5px solid rgba(46,42,38,0.12);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.process-step {
+  display: flex;
+  gap: 16px;
+  padding: 14px 16px;
+  border-bottom: 0.5px solid rgba(46,42,38,0.07);
+  align-items: flex-start;
+}
+.process-step:last-child { border-bottom: none; }
+.process-step:nth-child(even) { background: rgba(232,216,196,0.12); }
+.step-num {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--terra);
+  color: #FAF4EC;
+  font-size: 11px;
+  font-weight: 600;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.step-text {
+  font-size: 13px;
+  color: rgba(17,24,39,0.68);
+  line-height: 1.6;
+  padding-top: 1px;
+}
+.step-text strong { color: var(--char); font-weight: 600; }
+
+/* ── VERSION INFO ── */
+.version-block {
+  background: rgba(46,42,38,0.03);
+  border: 0.5px solid rgba(46,42,38,0.1);
+  border-radius: 10px;
+  padding: 18px 20px;
+  font-size: 12px;
+  color: rgba(46,42,38,0.5);
+  line-height: 1.7;
+  margin-top: 32px;
+}
+.version-block strong { color: var(--char); font-weight: 600; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 640px) {
+  .page-title { font-size: 26px; }
+  .source-head, .source-row { grid-template-columns: 1fr 1fr; }
+  .source-type { display: none; }
+  .example-pair { grid-template-columns: 1fr; }
+  .example-col-head.not { border-top: 1px solid rgba(46,42,38,0.1); }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-left">
+    <a class="nav-logo-link" href="index.html">
+      <svg class="eye-mark" viewBox="0 0 28 28" fill="none">
+        <circle cx="14" cy="14" r="13" fill="#2E2A26"/>
+        <ellipse cx="14" cy="14" rx="8" ry="5.5" fill="#FAF4EC"/>
+        <circle cx="14" cy="14" r="3.5" fill="#2E2A26"/>
+        <circle cx="14" cy="14" r="2.2" fill="#C4633A"/>
+        <circle cx="15.1" cy="12.9" r="0.7" fill="#FAF4EC"/>
+      </svg>
+      <span class="wordmark">Plainview</span>
+    </a>
+  </div>
+  <div class="nav-links">
+    <a href="index.html">Browse candidates</a>
+    <a href="about.html">About</a>
+    <a href="editorial-policy.html" class="active">Editorial policy</a>
+  </div>
+  <button class="nav-toggle" onclick="document.getElementById('navDrawer').classList.toggle('open')" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-drawer" id="navDrawer">
+  <a href="index.html">Browse candidates</a>
+  <a href="about.html">About</a>
+  <a href="editorial-policy.html" class="active">Editorial policy</a>
+</div>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="page-eyebrow">Editorial Policy</div>
+    <h1 class="page-title">How we source, verify, and present information.</h1>
+    <p class="page-lead">Every claim on Plainview comes from a public, primary source. This document explains exactly how we decide what to include, how we verify it, and what we do when we get something wrong.</p>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content-wrap">
+
+  <!-- Core commitment -->
+  <div class="content-section">
+    <div class="section-eyebrow">Core commitment</div>
+    <h2 class="section-h">Nonpartisan means the structure, not just the words.</h2>
+    <div class="section-body">
+      <p>Every candidate on Plainview receives an identical profile structure. The same fields, the same amount of space, the same visual weight. No candidate is featured more prominently than another. No issue is color-coded to signal urgency. The nonpartisan standard is structural, not just rhetorical.</p>
+      <p>We do not editorialize. We do not describe candidates as "controversial," "divisive," "extreme," or "popular." We report what they said, what they voted for, and where their money came from — and we link to the original source so you can verify it yourself.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Sources we use -->
+  <div class="content-section">
+    <div class="section-eyebrow">Approved sources</div>
+    <h2 class="section-h">Where our information comes from.</h2>
+    <div class="section-body">
+      <p>Plainview accepts information only from primary sources — official records, direct quotes, and verified public data. We do not accept campaign-provided summaries, press releases without corroboration, or secondary reporting as the sole basis for a claim.</p>
+    </div>
+    <div class="source-table">
+      <div class="source-head">
+        <span>Source</span>
+        <span>Used for</span>
+        <span>Type</span>
+      </div>
+      <div class="source-row">
+        <div class="source-name">Congress.gov</div>
+        <div class="source-use">Voting records, bill sponsorships, federal legislative history</div>
+        <div class="source-type">Official government record</div>
+      </div>
+      <div class="source-row">
+        <div class="source-name">OpenSecrets</div>
+        <div class="source-use">Campaign finance, donor industries, PAC connections</div>
+        <div class="source-type">Verified public data (FEC)</div>
+      </div>
+      <div class="source-row">
+        <div class="source-name">FEC.gov</div>
+        <div class="source-use">Raw campaign finance filings and disclosures</div>
+        <div class="source-type">Official government record</div>
+      </div>
+      <div class="source-row">
+        <div class="source-name">Ballotpedia</div>
+        <div class="source-use">Office history, election results, biographical facts</div>
+        <div class="source-type">Verified civic reference</div>
+      </div>
+      <div class="source-row">
+        <div class="source-name">CA Legislature</div>
+        <div class="source-use">State voting records, bill authorship, committee assignments</div>
+        <div class="source-type">Official government record</div>
+      </div>
+      <div class="source-row">
+        <div class="source-name">Candidate websites</div>
+        <div class="source-use">Official stated platform positions only — always labeled as self-reported</div>
+        <div class="source-type">Self-reported / labeled</div>
+      </div>
+      <div class="source-row">
+        <div class="source-name">Press quotes</div>
+        <div class="source-use">Direct quotes only, linked to original article — never paraphrased</div>
+        <div class="source-type">Primary quote / linked</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Sourcing rules -->
+  <div class="content-section">
+    <div class="section-eyebrow">Sourcing rules</div>
+    <h2 class="section-h">What we will and won't include.</h2>
+    <div class="rules-list">
+      <div class="rule-item">
+        <div class="rule-num">1</div>
+        <div class="rule-body">
+          <div class="rule-title">Primary sources only</div>
+          <div class="rule-desc">Every factual claim must be traceable to a primary source — an official record, a verified dataset, or a direct quote linked to its original publication. Secondary reporting (e.g. "according to a news article that cited...") is not accepted as a source.</div>
+        </div>
+      </div>
+      <div class="rule-item">
+        <div class="rule-num">2</div>
+        <div class="rule-body">
+          <div class="rule-title">No paraphrase without attribution</div>
+          <div class="rule-desc">We do not summarize what a candidate "believes" or "opposes" without a direct citation. Interpretive language is prohibited. We report what the record shows, not what we infer from it.</div>
+        </div>
+      </div>
+      <div class="rule-item">
+        <div class="rule-num">3</div>
+        <div class="rule-body">
+          <div class="rule-title">Identical structure for every candidate</div>
+          <div class="rule-desc">Every profile contains the same fields. If a field cannot be sourced for a candidate, it is marked "not available" rather than omitted or estimated. No candidate receives a field another doesn't.</div>
+        </div>
+      </div>
+      <div class="rule-item">
+        <div class="rule-num">4</div>
+        <div class="rule-body">
+          <div class="rule-title">No editorial framing</div>
+          <div class="rule-desc">Words like "controversial," "extreme," "popular," "divisive," and "bold" are prohibited. We describe actions and records, not character or political positioning. The reader draws conclusions; we supply facts.</div>
+        </div>
+      </div>
+      <div class="rule-item">
+        <div class="rule-num">5</div>
+        <div class="rule-body">
+          <div class="rule-title">Timestamps on all information</div>
+          <div class="rule-desc">Every profile shows its last-updated date. Political situations change; voters deserve to know how current the information is.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Write like this -->
+  <div class="content-section">
+    <div class="section-eyebrow">Language standards</div>
+    <h2 class="section-h">How we write — and don't write.</h2>
+    <div class="example-pair">
+      <div class="example-col">
+        <div class="example-col-head write">We write like this</div>
+        <div class="example-body">
+          <div class="example-item write">Voted yes on SB 1. Source: CA Senate, Jan 2025.</div>
+          <div class="example-item write">Received $210k from real estate donors. Source: OpenSecrets.</div>
+          <div class="example-item write">Opposes Prop 34. Stated reason: fiscal impact on county budget. Source: candidate website, Oct 2025.</div>
+          <div class="example-item write">"Housing is a human right." — SF Chronicle, Jan 2026. [direct link]</div>
+        </div>
+      </div>
+      <div class="example-col">
+        <div class="example-col-head not">Not like this</div>
+        <div class="example-body">
+          <div class="example-item not">The senator controversially supported the divisive bill.</div>
+          <div class="example-item not">Is in the pocket of real estate interests.</div>
+          <div class="example-item not">Shockingly voted against a measure that would have helped thousands.</div>
+          <div class="example-item not">Sparked outrage with incendiary comments on housing policy.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Corrections -->
+  <div class="content-section">
+    <div class="section-eyebrow">Corrections</div>
+    <h2 class="section-h">What happens when we get something wrong.</h2>
+    <div class="section-body">
+      <p>We will get things wrong. When that happens, we correct quickly and transparently. We do not silently update profiles — corrections are logged with the date they were made.</p>
+    </div>
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="step-num">1</div>
+        <div class="step-text"><strong>Error identified</strong> — by our team, a reader, a candidate campaign, or a third party. All correction requests are treated equally regardless of source.</div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">2</div>
+        <div class="step-text"><strong>Source verification</strong> — we check the claim against available primary sources. If the error is confirmed, we proceed. If disputed, we note the dispute without taking a side.</div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">3</div>
+        <div class="step-text"><strong>Correction made</strong> — the profile is updated with the accurate information. The "last updated" date is refreshed. The correction is logged internally.</div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">4</div>
+        <div class="step-text"><strong>Acknowledgment</strong> — for significant factual errors, a correction note is added to the relevant profile section indicating what changed and when.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- What we don't do -->
+  <div class="content-section">
+    <div class="section-eyebrow">Independence</div>
+    <h2 class="section-h">What we will never do.</h2>
+    <div class="section-body">
+      <p>Plainview will never accept payment, advertising revenue, or sponsored content from any candidate, campaign, political party, PAC, or politically affiliated organization — at any stage of the project's growth.</p>
+      <p>We will never prioritize or feature a candidate based on who they are, what party they belong to, or what positions they hold. Our nonpartisan standard is structural and non-negotiable.</p>
+      <p>We will never publish a claim we cannot source. If information is unavailable, the field reads "not available" — not an estimate, not a guess, not a paraphrase of something we think is probably true.</p>
+    </div>
+  </div>
+
+  <!-- Version -->
+  <div class="version-block">
+    <strong>Editorial Policy v1.0</strong> · Published March 2026 · Plainview / National Student Council Glisten Project<br>
+    This policy applies to all candidate profiles published on Plainview. Questions or correction requests can be submitted via the contact information on the About page.
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <svg width="24" height="24" viewBox="0 0 28 28" fill="none">
+        <circle cx="14" cy="14" r="13" fill="#2E2A26" stroke="rgba(250,244,236,0.12)" stroke-width="0.5"/>
+        <ellipse cx="14" cy="14" rx="8" ry="5.5" fill="#FAF4EC"/>
+        <circle cx="14" cy="14" r="3.5" fill="#2E2A26"/>
+        <circle cx="14" cy="14" r="2.2" fill="#C4633A"/>
+        <circle cx="15.1" cy="12.9" r="0.7" fill="#FAF4EC"/>
+      </svg>
+      <div>
+        <div class="footer-wordmark">Plainview</div>
+        <div class="footer-tagline">Know who you're voting for.</div>
+      </div>
+    </div>
+    <div class="footer-links">
+      <a href="index.html">Browse candidates</a>
+      <a href="about.html">About</a>
+      <a href="editorial-policy.html">Editorial policy</a>
+    </div>
+  </div>
+  <div class="footer-note">
+    Plainview is a nonpartisan, nonprofit civic technology project. We do not accept advertising, endorsements, or donations from candidates, campaigns, or political organizations. All candidate information is sourced from public records and cited primary sources. A National Student Council / Glisten project.
+  </div>
+</footer>
+
+</body>
+</html>

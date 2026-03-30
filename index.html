@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plainview — Know who you're voting for</title>
+<meta name="description" content="Nonpartisan candidate profiles for Bay Area voters. Every claim sourced. No spin, no agenda — just the full picture.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+
+/* ── HERO ── */
+.hero {
+  background: var(--char);
+  padding: 32px 24px 36px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+.hero-inner {
+  max-width: 960px;
+  margin: 0 auto;
+}
+.hero-tag {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--terra);
+  margin-bottom: 10px;
+}
+.hero-h {
+  font-family: var(--font-d);
+  font-size: 30px;
+  color: #FAF4EC;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin-bottom: 8px;
+}
+.hero-sub {
+  font-size: 13px;
+  color: rgba(250,244,236,0.58);
+  line-height: 1.65;
+  max-width: 500px;
+}
+.hero-stats {
+  display: flex;
+  gap: 28px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 0.5px solid rgba(255,255,255,0.08);
+  flex-wrap: wrap;
+}
+.stat-item {}
+.stat-num {
+  font-family: var(--font-d);
+  font-size: 20px;
+  color: var(--terra);
+  font-weight: 700;
+  line-height: 1;
+}
+.stat-label {
+  font-size: 10px;
+  color: rgba(250,244,236,0.35);
+  margin-top: 3px;
+  font-weight: 500;
+}
+
+/* ── SEARCH BAR ── */
+.search-wrap {
+  background: var(--sand2);
+  border-bottom: 1px solid rgba(46,42,38,0.12);
+  padding: 12px 24px;
+  position: sticky;
+  top: 52px;
+  z-index: 90;
+}
+.search-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.search-box {
+  flex: 1;
+  min-width: 180px;
+  background: var(--cream);
+  border: 0.5px solid rgba(46,42,38,0.2);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-family: var(--font-b);
+  color: var(--ink);
+  transition: border-color .15s;
+}
+.search-box::placeholder { color: rgba(17,24,39,0.38); }
+.search-box:focus { outline: none; border-color: var(--terra); }
+
+.pill {
+  background: var(--cream);
+  border: 0.5px solid rgba(46,42,38,0.2);
+  border-radius: 99px;
+  padding: 5px 13px;
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(17,24,39,0.6);
+  cursor: pointer;
+  transition: all .15s;
+  white-space: nowrap;
+  user-select: none;
+}
+.pill.active { background: var(--char); color: var(--terra); border-color: var(--char); }
+.pill:hover:not(.active) { background: var(--sand); border-color: rgba(46,42,38,0.3); }
+
+/* ── LAYOUT ── */
+.layout {
+  display: flex;
+  max-width: 960px;
+  margin: 0 auto;
+  min-height: calc(100vh - 240px);
+  padding: 0 24px;
+  gap: 24px;
+}
+
+/* ── SIDEBAR ── */
+.sidebar {
+  width: 180px;
+  flex-shrink: 0;
+  padding: 20px 0;
+}
+
+.sb-label {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(46,42,38,0.4);
+  margin-bottom: 4px;
+  margin-top: 18px;
+  padding: 0 6px;
+}
+.sb-label:first-child { margin-top: 0; }
+
+.sb-item {
+  font-size: 12px;
+  color: rgba(17,24,39,0.6);
+  padding: 5px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all .15s;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  user-select: none;
+}
+.sb-item:hover { background: rgba(46,42,38,0.06); color: var(--ink); }
+.sb-item.active { background: #EDE5D8; color: var(--char); font-weight: 600; }
+.sb-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+  opacity: 0.35;
+}
+.sb-item.active .sb-dot { opacity: 1; }
+
+/* Mobile sidebar toggle */
+.sidebar-toggle {
+  display: none;
+  width: 100%;
+  background: var(--cream);
+  border: 0.5px solid rgba(46,42,38,0.18);
+  border-radius: 8px;
+  padding: 9px 14px;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(17,24,39,0.65);
+  font-family: var(--font-b);
+  cursor: pointer;
+  text-align: left;
+  margin: 16px 0 0;
+  justify-content: space-between;
+  align-items: center;
+}
+.sidebar-toggle-arrow { font-size: 10px; }
+.sidebar-drawer { display: flex; flex-direction: column; }
+
+/* ── MAIN ── */
+.main { flex: 1; padding: 20px 0; min-width: 0; }
+
+.results-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.results-count {
+  font-size: 11px;
+  color: rgba(17,24,39,0.4);
+  font-weight: 500;
+}
+.sort-select {
+  font-size: 11px;
+  color: rgba(17,24,39,0.55);
+  background: transparent;
+  border: 0.5px solid rgba(46,42,38,0.15);
+  border-radius: 6px;
+  padding: 3px 8px;
+  font-family: var(--font-b);
+  cursor: pointer;
+}
+
+/* ── CANDIDATE CARD ── */
+.card {
+  background: #FFFDF9;
+  border: 0.5px solid rgba(46,42,38,0.13);
+  border-radius: 10px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  transition: border-color .15s, box-shadow .15s;
+}
+.card:hover {
+  border-color: rgba(196,99,58,0.28);
+  box-shadow: 0 2px 12px rgba(46,42,38,0.06);
+}
+
+.card-head {
+  padding: 14px 16px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 0.5px solid rgba(46,42,38,0.07);
+}
+.card-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--char);
+  font-family: var(--font-b);
+  line-height: 1.2;
+}
+.card-office {
+  font-size: 11px;
+  color: rgba(17,24,39,0.45);
+  margin-top: 3px;
+  line-height: 1.4;
+}
+.badges {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+  align-items: flex-start;
+}
+.badge {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 99px;
+  white-space: nowrap;
+}
+.b-dem  { background: #C8B4E0; color: #2A1248; }
+.b-rep  { background: #E0B8A8; color: #3C1008; }
+.b-ind  { background: #B4D4C0; color: #143820; }
+.b-inc  { background: #F0E0D0; color: #5A2A10; }
+.b-chl  { background: #E0E8E4; color: #1E3430; }
+.b-open { background: #E8E4DC; color: #3A3428; }
+
+.card-body {
+  padding: 12px 16px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+.col-label {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(46,42,38,0.4);
+  margin-bottom: 4px;
+}
+.col-text {
+  font-size: 12px;
+  color: rgba(17,24,39,0.68);
+  line-height: 1.55;
+}
+.col-link {
+  font-size: 10px;
+  color: var(--terra);
+  text-decoration: none;
+  font-weight: 500;
+  font-family: var(--font-m);
+  cursor: pointer;
+}
+.col-link:hover { text-decoration: underline; }
+
+.card-tags {
+  padding: 8px 16px;
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  border-top: 0.5px solid rgba(46,42,38,0.06);
+}
+.tag {
+  font-size: 10px;
+  font-weight: 500;
+  padding: 2px 9px;
+  border-radius: 99px;
+}
+
+.card-foot {
+  padding: 9px 16px;
+  border-top: 0.5px solid rgba(46,42,38,0.07);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.src-tags { display: flex; gap: 5px; flex-wrap: wrap; }
+.src-tag {
+  font-size: 10px;
+  font-family: var(--font-m);
+  background: #EDE8E0;
+  color: #5A5040;
+  border: 0.5px solid #D8CDB8;
+  border-radius: 5px;
+  padding: 1px 6px;
+}
+.updated {
+  font-size: 10px;
+  color: rgba(46,42,38,0.3);
+  font-family: var(--font-m);
+  margin-top: 3px;
+}
+.view-btn {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--terra);
+  background: rgba(196,99,58,0.08);
+  border: 0.5px solid rgba(196,99,58,0.22);
+  border-radius: 6px;
+  padding: 5px 12px;
+  cursor: pointer;
+  font-family: var(--font-b);
+  transition: all .15s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.view-btn:hover { background: rgba(196,99,58,0.16); }
+
+.no-results {
+  text-align: center;
+  padding: 60px 20px;
+  color: rgba(46,42,38,0.38);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* ── MODAL ── */
+.modal-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(46,42,38,0.5);
+  z-index: 200;
+  overflow-y: auto;
+  padding: 32px 16px;
+  -webkit-overflow-scrolling: touch;
+}
+.modal-backdrop.open { display: flex; align-items: flex-start; justify-content: center; }
+
+.modal {
+  background: var(--cream);
+  border-radius: 14px;
+  border: 0.5px solid rgba(46,42,38,0.14);
+  max-width: 660px;
+  width: 100%;
+  overflow: hidden;
+  animation: modalIn .18s ease;
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.modal-head {
+  background: var(--char);
+  padding: 20px 22px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+.modal-name {
+  font-family: var(--font-d);
+  font-size: 22px;
+  color: var(--cream);
+  font-weight: 700;
+  line-height: 1.15;
+}
+.modal-office { font-size: 12px; color: rgba(250,244,236,0.5); margin-top: 4px; }
+.modal-close {
+  background: rgba(255,255,255,0.1);
+  border: none;
+  color: rgba(250,244,236,0.65);
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 6px;
+  width: 30px; height: 30px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: background .15s;
+}
+.modal-close:hover { background: rgba(255,255,255,0.18); color: #FAF4EC; }
+
+.modal-body { padding: 20px 22px; }
+
+.m-section { margin-bottom: 20px; }
+.m-section:last-child { margin-bottom: 0; }
+.m-section-title {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(46,42,38,0.4);
+  margin-bottom: 8px;
+  padding-bottom: 6px;
+  border-bottom: 0.5px solid rgba(46,42,38,0.1);
+}
+.m-text { font-size: 13px; color: rgba(17,24,39,0.72); line-height: 1.7; }
+
+.m-finance {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 8px;
+}
+.fin-card {
+  background: #F5EFE6;
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+}
+.fin-amt { font-size: 15px; font-weight: 600; color: var(--char); }
+.fin-src { font-size: 10px; color: rgba(46,42,38,0.45); margin-top: 2px; font-family: var(--font-m); }
+
+.m-stances { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+.m-stance {
+  display: flex;
+  gap: 10px;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.m-stance-key {
+  color: rgba(46,42,38,0.45);
+  font-weight: 600;
+  min-width: 110px;
+  flex-shrink: 0;
+  padding-top: 1px;
+}
+.m-stance-val { color: var(--ink); }
+.m-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 8px; }
+
+.modal-source-note {
+  font-size: 10px;
+  color: rgba(46,42,38,0.35);
+  font-family: var(--font-m);
+  margin-top: 8px;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 640px) {
+  .hero-h { font-size: 24px; }
+  .hero-stats { gap: 18px; }
+
+  .layout { flex-direction: column; gap: 0; padding: 0 16px; }
+
+  .sidebar { width: 100%; padding: 0; }
+  .sidebar-toggle { display: flex; }
+  .sidebar-drawer { display: none; }
+  .sidebar-drawer.open { display: flex; flex-direction: column; padding: 8px 0 12px; gap: 2px; }
+
+  .card-body {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .m-finance { grid-template-columns: repeat(3, 1fr); }
+
+  .m-stance { flex-direction: column; gap: 2px; }
+  .m-stance-key { min-width: unset; }
+
+  .search-wrap { top: 52px; }
+}
+
+@media (max-width: 400px) {
+  .m-finance { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-left">
+    <a class="nav-logo-link" href="index.html">
+      <svg class="eye-mark" viewBox="0 0 28 28" fill="none">
+        <circle cx="14" cy="14" r="13" fill="#2E2A26"/>
+        <ellipse cx="14" cy="14" rx="8" ry="5.5" fill="#FAF4EC"/>
+        <circle cx="14" cy="14" r="3.5" fill="#2E2A26"/>
+        <circle cx="14" cy="14" r="2.2" fill="#C4633A"/>
+        <circle cx="15.1" cy="12.9" r="0.7" fill="#FAF4EC"/>
+      </svg>
+      <span class="wordmark">Plainview</span>
+    </a>
+  </div>
+  <div class="nav-links">
+    <a href="index.html" class="active">Browse candidates</a>
+    <a href="about.html">About</a>
+    <a href="editorial-policy.html">Editorial policy</a>
+  </div>
+  <button class="nav-toggle" onclick="toggleNavDrawer()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE NAV DRAWER -->
+<div class="nav-drawer" id="navDrawer">
+  <a href="index.html" class="active">Browse candidates</a>
+  <a href="about.html">About</a>
+  <a href="editorial-policy.html">Editorial policy</a>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag">Bay Area · NorCal · Pilot</div>
+    <div class="hero-h">Know who you're voting for.</div>
+    <div class="hero-sub">Nonpartisan candidate profiles for Bay Area voters. Every claim sourced. No spin, no agenda — just the full picture.</div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num" id="statCandidates">8</div>
+        <div class="stat-label">Candidates profiled</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Regions covered</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Primary-sourced</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">0</div>
+        <div class="stat-label">Editorial spin</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SEARCH BAR -->
+<div class="search-wrap">
+  <div class="search-inner">
+    <input class="search-box" id="searchInput" type="text" placeholder="Search by name, issue, or district…" autocomplete="off">
+    <div class="pill active" data-office="all" onclick="setOffice(this,'all')">All offices</div>
+    <div class="pill" data-office="federal" onclick="setOffice(this,'federal')">Federal</div>
+    <div class="pill" data-office="state" onclick="setOffice(this,'state')">State</div>
+    <div class="pill" data-office="local" onclick="setOffice(this,'local')">Local</div>
+  </div>
+</div>
+
+<!-- BODY -->
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <!-- Mobile toggle -->
+    <button class="sidebar-toggle" onclick="toggleSidebar()">
+      <span>Filter candidates</span>
+      <span class="sidebar-toggle-arrow" id="sidebarArrow">▾</span>
+    </button>
+
+    <div class="sidebar-drawer" id="sidebarDrawer">
+      <div class="sb-label">Region</div>
+      <div class="sb-item active" data-region="all"     onclick="setSb(this,'region','all')"><span class="sb-dot"></span>All regions</div>
+      <div class="sb-item"        data-region="bay"     onclick="setSb(this,'region','bay')"><span class="sb-dot"></span>Bay Area</div>
+      <div class="sb-item"        data-region="norcal"  onclick="setSb(this,'region','norcal')"><span class="sb-dot"></span>NorCal</div>
+      <div class="sb-item"        data-region="central" onclick="setSb(this,'region','central')"><span class="sb-dot"></span>Central Valley</div>
+
+      <div class="sb-label">Office type</div>
+      <div class="sb-item active" data-officetype="all"      onclick="setSb(this,'officetype','all')"><span class="sb-dot"></span>All types</div>
+      <div class="sb-item"        data-officetype="congress" onclick="setSb(this,'officetype','congress')"><span class="sb-dot"></span>U.S. Congress</div>
+      <div class="sb-item"        data-officetype="senate"   onclick="setSb(this,'officetype','senate')"><span class="sb-dot"></span>State Senate</div>
+      <div class="sb-item"        data-officetype="assembly" onclick="setSb(this,'officetype','assembly')"><span class="sb-dot"></span>State Assembly</div>
+      <div class="sb-item"        data-officetype="local"    onclick="setSb(this,'officetype','local')"><span class="sb-dot"></span>City / Local</div>
+
+      <div class="sb-label">Status</div>
+      <div class="sb-item active" data-status="all"        onclick="setSb(this,'status','all')"><span class="sb-dot"></span>All</div>
+      <div class="sb-item"        data-status="incumbent"  onclick="setSb(this,'status','incumbent')"><span class="sb-dot"></span>Incumbent</div>
+      <div class="sb-item"        data-status="challenger" onclick="setSb(this,'status','challenger')"><span class="sb-dot"></span>Challenger</div>
+
+      <div class="sb-label">Party</div>
+      <div class="sb-item active" data-party="all" onclick="setSb(this,'party','all')"><span class="sb-dot"></span>All parties</div>
+      <div class="sb-item"        data-party="dem" onclick="setSb(this,'party','dem')"><span class="sb-dot"></span>Democrat</div>
+      <div class="sb-item"        data-party="rep" onclick="setSb(this,'party','rep')"><span class="sb-dot"></span>Republican</div>
+      <div class="sb-item"        data-party="ind" onclick="setSb(this,'party','ind')"><span class="sb-dot"></span>Independent</div>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+    <div class="results-bar">
+      <span class="results-count" id="resultsCount"></span>
+      <select class="sort-select" id="sortSelect" onchange="render()">
+        <option value="name">Sort: Name A–Z</option>
+        <option value="office">Sort: Office</option>
+        <option value="updated">Sort: Recently updated</option>
+      </select>
+    </div>
+    <div id="cardList"></div>
+  </main>
+</div>
+
+<!-- MODAL -->
+<div class="modal-backdrop" id="modal" onclick="closeModalOutside(event)">
+  <div class="modal" id="modalInner">
+    <div class="modal-head">
+      <div>
+        <div class="modal-name" id="mName"></div>
+        <div class="modal-office" id="mOffice"></div>
+        <div class="badges" id="mBadges" style="margin-top:8px"></div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="mBody"></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <svg width="24" height="24" viewBox="0 0 28 28" fill="none">
+        <circle cx="14" cy="14" r="13" fill="#2E2A26" stroke="rgba(250,244,236,0.12)" stroke-width="0.5"/>
+        <ellipse cx="14" cy="14" rx="8" ry="5.5" fill="#FAF4EC"/>
+        <circle cx="14" cy="14" r="3.5" fill="#2E2A26"/>
+        <circle cx="14" cy="14" r="2.2" fill="#C4633A"/>
+        <circle cx="15.1" cy="12.9" r="0.7" fill="#FAF4EC"/>
+      </svg>
+      <div>
+        <div class="footer-wordmark">Plainview</div>
+        <div class="footer-tagline">Know who you're voting for.</div>
+      </div>
+    </div>
+    <div class="footer-links">
+      <a href="index.html">Browse candidates</a>
+      <a href="about.html">About</a>
+      <a href="editorial-policy.html">Editorial policy</a>
+    </div>
+  </div>
+  <div class="footer-note">
+    Plainview is a nonpartisan, nonprofit civic technology project. We do not accept advertising, endorsements, or donations from candidates, campaigns, or political organizations. All candidate information is sourced from public records and cited primary sources. A National Student Council / Glisten project.
+  </div>
+</footer>
+
+<!-- DATA -->
+<script src="candidates.js"></script>
+
+<script>
+// ── Update hero stat count dynamically ──
+document.getElementById('statCandidates').textContent = CANDIDATES.length;
+
+// ── Filters state ──
+const filters = { office:'all', region:'all', officetype:'all', status:'all', party:'all', search:'' };
+
+// ── Nav & sidebar toggles ──
+function toggleNavDrawer() {
+  document.getElementById('navDrawer').classList.toggle('open');
+}
+function toggleSidebar() {
+  const drawer = document.getElementById('sidebarDrawer');
+  const arrow  = document.getElementById('sidebarArrow');
+  drawer.classList.toggle('open');
+  arrow.textContent = drawer.classList.contains('open') ? '▴' : '▾';
+}
+
+// ── Filter setters ──
+function setOffice(el, val) {
+  document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  filters.office = val;
+  render();
+}
+function setSb(el, key, val) {
+  document.querySelectorAll(`[data-${key}]`).forEach(e => e.classList.remove('active'));
+  el.classList.add('active');
+  filters[key] = val;
+  render();
+}
+
+document.getElementById('searchInput').addEventListener('input', e => {
+  filters.search = e.target.value.toLowerCase();
+  render();
+});
+
+// ── Filter logic ──
+function matchOffice(c) {
+  if (filters.office === 'all')     return true;
+  if (filters.office === 'federal') return c.officetype === 'congress';
+  if (filters.office === 'state')   return ['senate','assembly','state'].includes(c.officetype);
+  if (filters.office === 'local')   return c.officetype === 'local';
+  return true;
+}
+
+function filtered() {
+  return CANDIDATES.filter(c => {
+    if (filters.region !== 'all'     && c.region      !== filters.region)     return false;
+    if (filters.officetype !== 'all' && c.officetype  !== filters.officetype) return false;
+    if (filters.status !== 'all'     && c.status      !== filters.status)     return false;
+    if (filters.party !== 'all'      && c.party       !== filters.party)      return false;
+    if (!matchOffice(c)) return false;
+    if (filters.search) {
+      const q = filters.search;
+      return c.name.toLowerCase().includes(q)
+          || c.office.toLowerCase().includes(q)
+          || c.platform.toLowerCase().includes(q)
+          || c.tags.some(t => t.includes(q));
+    }
+    return true;
+  });
+}
+
+function sorted(arr) {
+  const s = document.getElementById('sortSelect').value;
+  if (s === 'name')   return [...arr].sort((a,b) => a.name.localeCompare(b.name));
+  if (s === 'office') return [...arr].sort((a,b) => a.office.localeCompare(b.office));
+  return arr;
+}
+
+// ── Badge helpers ──
+function tagHtml(t) {
+  const cfg = TAGS[t] || { bg:'#E8E4DC', c:'#3A3428' };
+  return `<span class="tag" style="background:${cfg.bg};color:${cfg.c}">${t}</span>`;
+}
+function partyBadge(p) {
+  const m = { dem:'b-dem Democrat', rep:'b-rep Republican', ind:'b-ind Independent' };
+  const cls = m[p] || 'b-open Other';
+  const [c, label] = cls.split(' ');
+  return `<span class="badge ${c}">${label}</span>`;
+}
+function statusBadge(s) {
+  const m = { incumbent:'b-inc Incumbent', challenger:'b-chl Challenger', 'open seat':'b-open Open seat' };
+  const cls = m[s] || 'b-open Open';
+  const [c, label] = cls.split(' ');
+  return `<span class="badge ${c}">${label}</span>`;
+}
+
+// ── Render card list ──
+function render() {
+  const list = sorted(filtered());
+  const el   = document.getElementById('cardList');
+  document.getElementById('resultsCount').textContent =
+    `Showing ${list.length} of ${CANDIDATES.length} candidate${CANDIDATES.length !== 1 ? 's' : ''}`;
+
+  if (!list.length) {
+    el.innerHTML = `<div class="no-results">No candidates match your filters.<br>Try broadening your search or adjusting the sidebar.</div>`;
+    return;
+  }
+
+  el.innerHTML = list.map(c => `
+    <div class="card">
+      <div class="card-head">
+        <div>
+          <div class="card-name">${c.name}</div>
+          <div class="card-office">${c.office}</div>
+        </div>
+        <div class="badges">${partyBadge(c.party)}${statusBadge(c.status)}</div>
+      </div>
+      <div class="card-body">
+        <div>
+          <div class="col-label">Key platform positions</div>
+          <div class="col-text">${c.platform.slice(0,120)}… <a class="col-link" onclick="openModal(${c.id})">→ Full profile</a></div>
+        </div>
+        <div>
+          <div class="col-label">Top donor industries</div>
+          <div class="col-text">${c.donors}</div>
+        </div>
+        <div>
+          <div class="col-label">Recent statement</div>
+          <div class="col-text">${c.statement}</div>
+        </div>
+      </div>
+      <div class="card-tags">${c.tags.map(tagHtml).join('')}</div>
+      <div class="card-foot">
+        <div>
+          <div class="src-tags">${c.sources.map(s => `<span class="src-tag">${s}</span>`).join('')}</div>
+          <div class="updated">Updated ${c.updated}</div>
+        </div>
+        <button class="view-btn" onclick="openModal(${c.id})">Full profile →</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ── Modal ──
+function openModal(id) {
+  const c = CANDIDATES.find(x => x.id === id);
+  document.getElementById('mName').textContent   = c.name;
+  document.getElementById('mOffice').textContent = c.office;
+  document.getElementById('mBadges').innerHTML   = partyBadge(c.party) + statusBadge(c.status);
+
+  const stancesHtml = c.full.stances.map(s =>
+    `<div class="m-stance"><span class="m-stance-key">${s.issue}</span><span class="m-stance-val">${s.text}</span></div>`
+  ).join('');
+
+  document.getElementById('mBody').innerHTML = `
+    <div class="m-section">
+      <div class="m-section-title">Platform &amp; Policy Positions</div>
+      <div class="m-text">${c.platform}</div>
+      <div class="m-tags">${c.tags.map(tagHtml).join('')}</div>
+    </div>
+    <div class="m-section">
+      <div class="m-section-title">Voting Record</div>
+      <div class="m-text">${c.full.voting}</div>
+    </div>
+    <div class="m-section">
+      <div class="m-section-title">Campaign Finance</div>
+      <div class="m-finance">
+        ${c.full.finance.map(f => `<div class="fin-card"><div class="fin-amt">${f.amt}</div><div class="fin-src">${f.src}</div></div>`).join('')}
+      </div>
+      <div class="modal-source-note">Source: OpenSecrets / FEC</div>
+    </div>
+    <div class="m-section">
+      <div class="m-section-title">Endorsements</div>
+      <div class="m-text">${c.full.endorsements}</div>
+    </div>
+    <div class="m-section">
+      <div class="m-section-title">Stance on Key Issues</div>
+      <div class="m-stances">${stancesHtml}</div>
+    </div>
+    <div class="m-section">
+      <div class="m-section-title">Recent Statement</div>
+      <div class="m-text" style="font-style:italic">${c.statement}</div>
+    </div>
+  `;
+
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeModalOutside(e) {
+  if (e.target === document.getElementById('modal')) closeModal();
+}
+
+// Escape key closes modal
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// ── Init ──
+render();
+</script>
+</body>
+</html>

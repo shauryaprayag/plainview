@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Plainview</title>
+<meta name="description" content="Plainview is a nonpartisan civic technology platform helping Bay Area voters research political candidates through clear, sourced profiles.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+
+/* ── PAGE HERO ── */
+.page-hero {
+  background: var(--char);
+  padding: 48px 24px 52px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.page-hero-inner {
+  max-width: 680px;
+  margin: 0 auto;
+}
+.page-eyebrow {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--terra);
+  margin-bottom: 12px;
+}
+.page-title {
+  font-family: var(--font-d);
+  font-size: 34px;
+  color: #FAF4EC;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin-bottom: 14px;
+}
+.page-lead {
+  font-size: 14px;
+  color: rgba(250,244,236,0.58);
+  line-height: 1.75;
+  max-width: 560px;
+}
+
+/* ── CONTENT ── */
+.content-wrap {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 52px 24px;
+}
+
+.content-section {
+  margin-bottom: 48px;
+}
+.content-section:last-child {
+  margin-bottom: 0;
+}
+
+.section-eyebrow {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--terra);
+  margin-bottom: 8px;
+}
+.section-h {
+  font-family: var(--font-d);
+  font-size: 22px;
+  color: var(--char);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin-bottom: 14px;
+}
+.section-body {
+  font-size: 14px;
+  color: rgba(17,24,39,0.72);
+  line-height: 1.8;
+}
+.section-body p { margin-bottom: 14px; }
+.section-body p:last-child { margin-bottom: 0; }
+
+.divider {
+  height: 0.5px;
+  background: var(--sand);
+  margin: 48px 0;
+}
+
+/* ── PRINCIPLES GRID ── */
+.principles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 20px;
+}
+.principle {
+  background: #FFFDF9;
+  border: 0.5px solid rgba(46,42,38,0.12);
+  border-radius: 10px;
+  padding: 18px;
+}
+.principle-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--char);
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.principle-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--terra);
+  flex-shrink: 0;
+}
+.principle-desc {
+  font-size: 12px;
+  color: rgba(17,24,39,0.58);
+  line-height: 1.65;
+}
+
+/* ── WHAT WE INCLUDE ── */
+.profile-fields {
+  margin-top: 20px;
+  border: 0.5px solid rgba(46,42,38,0.12);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.field-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 13px 16px;
+  border-bottom: 0.5px solid rgba(46,42,38,0.07);
+}
+.field-row:last-child { border-bottom: none; }
+.field-row:nth-child(even) { background: rgba(232,216,196,0.15); }
+.field-check {
+  font-size: 12px;
+  color: var(--terra);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.field-text {
+  font-size: 13px;
+  color: rgba(17,24,39,0.72);
+  line-height: 1.5;
+}
+.field-text strong {
+  color: var(--char);
+  font-weight: 600;
+}
+
+/* ── NOT LIST ── */
+.not-list {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.not-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 13px;
+  color: rgba(17,24,39,0.68);
+  line-height: 1.6;
+}
+.not-mark {
+  font-size: 11px;
+  color: rgba(46,42,38,0.3);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* ── CTA ── */
+.cta-block {
+  background: var(--char);
+  border-radius: 12px;
+  padding: 28px 28px;
+  text-align: center;
+  margin-top: 48px;
+}
+.cta-h {
+  font-family: var(--font-d);
+  font-size: 20px;
+  color: #FAF4EC;
+  font-weight: 700;
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+.cta-sub {
+  font-size: 13px;
+  color: rgba(250,244,236,0.5);
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+.cta-btn {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--terra);
+  background: rgba(196,99,58,0.12);
+  border: 0.5px solid rgba(196,99,58,0.3);
+  border-radius: 8px;
+  padding: 10px 22px;
+  text-decoration: none;
+  transition: background .15s;
+  font-family: var(--font-b);
+}
+.cta-btn:hover { background: rgba(196,99,58,0.22); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 640px) {
+  .page-title { font-size: 26px; }
+  .principles { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-left">
+    <a class="nav-logo-link" href="index.html">
+      <svg class="eye-mark" viewBox="0 0 28 28" fill="none">
+        <circle cx="14" cy="14" r="13" fill="#2E2A26"/>
+        <ellipse cx="14" cy="14" rx="8" ry="5.5" fill="#FAF4EC"/>
+        <circle cx="14" cy="14" r="3.5" fill="#2E2A26"/>
+        <circle cx="14" cy="14" r="2.2" fill="#C4633A"/>
+        <circle cx="15.1" cy="12.9" r="0.7" fill="#FAF4EC"/>
+      </svg>
+      <span class="wordmark">Plainview</span>
+    </a>
+  </div>
+  <div class="nav-links">
+    <a href="index.html">Browse candidates</a>
+    <a href="about.html" class="active">About</a>
+    <a href="editorial-policy.html">Editorial policy</a>
+  </div>
+  <button class="nav-toggle" onclick="document.getElementById('navDrawer').classList.toggle('open')" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-drawer" id="navDrawer">
+  <a href="index.html">Browse candidates</a>
+  <a href="about.html" class="active">About</a>
+  <a href="editorial-policy.html">Editorial policy</a>
+</div>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="page-eyebrow">About Plainview</div>
+    <h1 class="page-title">A clearer view of who's on your ballot.</h1>
+    <p class="page-lead">Plainview is a nonpartisan civic technology project built to give every Bay Area voter a simple, trustworthy place to research their candidates — with no spin, no agenda, and every claim backed by a primary source.</p>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content-wrap">
+
+  <!-- Why we exist -->
+  <div class="content-section">
+    <div class="section-eyebrow">The problem</div>
+    <h2 class="section-h">Good information about candidates is hard to find.</h2>
+    <div class="section-body">
+      <p>Americans who want to vote informedly have no single, trustworthy place to understand what their candidates actually believe, have said, and have done. Political information is scattered across campaign websites, news archives, social media, and financial disclosures — and much of what reaches voters is filtered through emotionally charged media that prioritizes engagement over clarity.</p>
+      <p>When voters can't easily access clear, factual profiles of their candidates, they're left to navigate a landscape deliberately designed to confuse. Plainview exists to change that — lowering the effort required to become an informed voter to near zero.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- What we do -->
+  <div class="content-section">
+    <div class="section-eyebrow">What we do</div>
+    <h2 class="section-h">Every candidate. One place. No spin.</h2>
+    <div class="section-body">
+      <p>Plainview compiles consistently structured profiles for candidates on the ballot in a given area. Each profile aggregates information that is currently scattered or inaccessible — presented in plain language, with no editorial framing.</p>
+    </div>
+
+    <div class="profile-fields">
+      <div class="field-row">
+        <span class="field-check">→</span>
+        <span class="field-text"><strong>Official platform & policy positions</strong> — what the candidate says they stand for, in their own words.</span>
+      </div>
+      <div class="field-row">
+        <span class="field-check">→</span>
+        <span class="field-text"><strong>Voting record</strong> — for incumbents, sourced directly from Congress.gov or official legislative records.</span>
+      </div>
+      <div class="field-row">
+        <span class="field-check">→</span>
+        <span class="field-text"><strong>Press statements</strong> — things candidates have said publicly, with direct links to the original source.</span>
+      </div>
+      <div class="field-row">
+        <span class="field-check">→</span>
+        <span class="field-text"><strong>Campaign finance</strong> — where their money comes from, via OpenSecrets and FEC public data.</span>
+      </div>
+      <div class="field-row">
+        <span class="field-check">→</span>
+        <span class="field-text"><strong>Endorsements</strong> — organizations and individuals who have publicly backed the candidate.</span>
+      </div>
+      <div class="field-row">
+        <span class="field-check">→</span>
+        <span class="field-text"><strong>Stance on key issues</strong> — housing, immigration, climate, and other high-relevance topics, sourced from primary records.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Our principles -->
+  <div class="content-section">
+    <div class="section-eyebrow">Our principles</div>
+    <h2 class="section-h">Built on five commitments.</h2>
+    <div class="principles">
+      <div class="principle">
+        <div class="principle-name"><span class="principle-dot"></span>Informed</div>
+        <div class="principle-desc">Visitors leave with the full picture — sourced, structured, and in plain language. No detail is buried.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-name"><span class="principle-dot"></span>Nonpartisan</div>
+        <div class="principle-desc">No issue, party, or candidate gets more visual weight than another. Color, layout, and language are all held to this standard.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-name"><span class="principle-dot"></span>Human</div>
+        <div class="principle-desc">Warm, approachable, communal. Built for every Bay Area voter — not just the politically engaged.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-name"><span class="principle-dot"></span>Professional</div>
+        <div class="principle-desc">Editorial credibility. All claims cite primary sources. The site looks and feels like something you can trust.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-name"><span class="principle-dot"></span>Simple but thorough</div>
+        <div class="principle-desc">Every layer of detail is earned. Information density should never feel overwhelming.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-name"><span class="principle-dot"></span>Private</div>
+        <div class="principle-desc">No personal data collected. No tracking, no sign-in, no ads. Plainview is read-only and always will be.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- What we are not -->
+  <div class="content-section">
+    <div class="section-eyebrow">What we are not</div>
+    <h2 class="section-h">A few things Plainview deliberately isn't.</h2>
+    <div class="not-list">
+      <div class="not-item">
+        <span class="not-mark">—</span>
+        <span>We are not a news organization. We do not report, editorialize, or take positions on candidates or issues.</span>
+      </div>
+      <div class="not-item">
+        <span class="not-mark">—</span>
+        <span>We are not affiliated with any political party, campaign, PAC, or government agency.</span>
+      </div>
+      <div class="not-item">
+        <span class="not-mark">—</span>
+        <span>We are not Ballotpedia. Ballotpedia is built for policy researchers. Plainview is built for the first-time voter doing research the night before an election.</span>
+      </div>
+      <div class="not-item">
+        <span class="not-mark">—</span>
+        <span>We do not accept advertising, sponsored content, or paid placements of any kind.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Who we are -->
+  <div class="content-section">
+    <div class="section-eyebrow">Who built this</div>
+    <h2 class="section-h">A student civic tech project.</h2>
+    <div class="section-body">
+      <p>Plainview is a project developed under the National Student Council's Glisten program, which supports student-led civic innovation. It began as a Bay Area pilot with a small set of candidates, with the goal of expanding to all of California and eventually becoming a national resource.</p>
+      <p>The project is maintained by a small team of student researchers committed to accuracy, fairness, and the belief that an informed vote is a more powerful vote.</p>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-block">
+    <div class="cta-h">Ready to research your candidates?</div>
+    <div class="cta-sub">Browse nonpartisan profiles for Bay Area candidates — every claim sourced, no spin.</div>
+    <a class="cta-btn" href="index.html">Browse candidates →</a>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <svg width="24" height="24" viewBox="0 0 28 28" fill="none">
+        <circle cx="14" cy="14" r="13" fill="#2E2A26" stroke="rgba(250,244,236,0.12)" stroke-width="0.5"/>
+        <ellipse cx="14" cy="14" rx="8" ry="5.5" fill="#FAF4EC"/>
+        <circle cx="14" cy="14" r="3.5" fill="#2E2A26"/>
+        <circle cx="14" cy="14" r="2.2" fill="#C4633A"/>
+        <circle cx="15.1" cy="12.9" r="0.7" fill="#FAF4EC"/>
+      </svg>
+      <div>
+        <div class="footer-wordmark">Plainview</div>
+        <div class="footer-tagline">Know who you're voting for.</div>
+      </div>
+    </div>
+    <div class="footer-links">
+      <a href="index.html">Browse candidates</a>
+      <a href="about.html">About</a>
+      <a href="editorial-policy.html">Editorial policy</a>
+    </div>
+  </div>
+  <div class="footer-note">
+    Plainview is a nonpartisan, nonprofit civic technology project. We do not accept advertising, endorsements, or donations from candidates, campaigns, or political organizations. All candidate information is sourced from public records and cited primary sources. A National Student Council / Glisten project.
+  </div>
+</footer>
+
+</body>
+</html>
