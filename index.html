@@ -782,7 +782,7 @@ function render() {
       <div class="card-body">
         <div>
           <div class="col-label">Key platform positions</div>
-          <div class="col-text">${c.platform.slice(0,120)}… <a class="col-link" onclick="openModal(${c.id})">→ Full profile</a></div>
+          <div class="col-text">${c.platform.slice(0,120)}…</div>
         </div>
         <div>
           <div class="col-label">Top donor industries</div>
@@ -799,7 +799,10 @@ function render() {
           <div class="src-tags">${c.sources.map(s => `<span class="src-tag">${s}</span>`).join('')}</div>
           <div class="updated">Updated ${c.updated}</div>
         </div>
-        <button class="view-btn" onclick="openModal(${c.id})">Full profile →</button>
+        ${c.slug
+          ? `<a class="view-btn" href="${c.slug}.html">Full profile →</a>`
+          : `<button class="view-btn" onclick="openModal(${c.id})">Full profile →</button>`
+        }
       </div>
     </div>
   `).join('');
