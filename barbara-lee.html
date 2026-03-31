@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Barbara Lee — Plainview</title>
+<meta name="description" content="Full candidate profile for Barbara Lee, U.S. Senator, California. Voting record, campaign finance, issue stances, endorsements, and more.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+
+/* ── PROFILE HEADER ── */
+.profile-header {
+  background: var(--char);
+  padding: 36px 24px 40px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.profile-header-inner {
+  max-width: 960px;
+  margin: 0 auto;
+}
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(250,244,236,0.4);
+  text-decoration: none;
+  margin-bottom: 20px;
+  transition: color .15s;
+}
+.back-link:hover { color: rgba(250,244,236,0.8); }
+
+.profile-header-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.profile-name {
+  font-family: var(--font-d);
+  font-size: 36px;
+  color: #FAF4EC;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  margin-bottom: 6px;
+}
+.profile-office {
+  font-size: 14px;
+  color: rgba(250,244,236,0.5);
+  margin-bottom: 12px;
+}
+.profile-badges { display: flex; gap: 6px; flex-wrap: wrap; }
+.badge {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 99px;
+}
+.b-dem  { background: #C8B4E0; color: #2A1248; }
+.b-rep  { background: #E0B8A8; color: #3C1008; }
+.b-ind  { background: #B4D4C0; color: #143820; }
+.b-inc  { background: #F0E0D0; color: #5A2A10; }
+.b-chl  { background: #E0E8E4; color: #1E3430; }
+
+.profile-meta {
+  display: flex;
+  gap: 24px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 0.5px solid rgba(255,255,255,0.08);
+  flex-wrap: wrap;
+}
+.meta-item {}
+.meta-label {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(250,244,236,0.3);
+  margin-bottom: 3px;
+}
+.meta-val {
+  font-size: 12px;
+  color: rgba(250,244,236,0.7);
+  font-weight: 500;
+}
+.meta-val a {
+  color: var(--terra);
+  text-decoration: none;
+}
+.meta-val a:hover { text-decoration: underline; }
+
+/* ── PROFILE BODY ── */
+.profile-body {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 32px 24px 0;
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 24px;
+  align-items: start;
+}
+
+/* ── JUMP NAV ── */
+.jump-nav {
+  background: #FFFDF9;
+  border: 0.5px solid rgba(46,42,38,0.12);
+  border-radius: 10px;
+  overflow: hidden;
+  position: sticky;
+  top: 72px;
+}
+.jump-nav-title {
+  padding: 12px 16px;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(46,42,38,0.4);
+  border-bottom: 0.5px solid rgba(46,42,38,0.08);
+  background: rgba(46,42,38,0.03);
+}
+.jump-nav a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(17,24,39,0.6);
+  text-decoration: none;
+  border-bottom: 0.5px solid rgba(46,42,38,0.06);
+  transition: all .15s;
+}
+.jump-nav a:last-child { border-bottom: none; }
+.jump-nav a:hover { background: rgba(196,99,58,0.05); color: var(--char); }
+.jump-nav a.active { color: var(--terra); background: rgba(196,99,58,0.06); }
+.jump-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+  opacity: 0.4;
+}
+.jump-nav a.active .jump-dot { opacity: 1; }
+
+/* Office info box */
+.office-box {
+  background: #FFFDF9;
+  border: 0.5px solid rgba(46,42,38,0.12);
+  border-radius: 10px;
+  padding: 16px;
+  margin-top: 12px;
+}
+.office-box-title {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(46,42,38,0.4);
+  margin-bottom: 10px;
+}
+.office-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 12px;
+  padding: 5px 0;
+  border-bottom: 0.5px solid rgba(46,42,38,0.06);
+  gap: 8px;
+}
+.office-row:last-child { border-bottom: none; }
+.office-key { color: rgba(46,42,38,0.45); font-weight: 500; flex-shrink: 0; }
+.office-val { color: var(--ink); text-align: right; }
+.office-desc {
+  font-size: 11px;
+  color: rgba(17,24,39,0.5);
+  line-height: 1.6;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 0.5px solid rgba(46,42,38,0.07);
+}
+
+/* Social links */
+.social-links {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+.social-link {
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(46,42,38,0.55);
+  background: rgba(46,42,38,0.05);
+  border: 0.5px solid rgba(46,42,38,0.12);
+  border-radius: 6px;
+  padding: 5px 10px;
+  text-decoration: none;
+  transition: all .15s;
+}
+.social-link:hover { color: var(--terra); border-color: rgba(196,99,58,0.3); background: rgba(196,99,58,0.06); }
+
+/* ── MAIN CONTENT COLUMN ── */
+.main-col { min-width: 0; }
+
+/* ── SECTION BLOCK ── */
+.section-block {
+  background: #FFFDF9;
+  border: 0.5px solid rgba(46,42,38,0.12);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 16px;
+  scroll-margin-top: 80px;
+}
+.section-block-head {
+  padding: 14px 18px;
+  border-bottom: 0.5px solid rgba(46,42,38,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(46,42,38,0.02);
+}
+.section-block-title {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(46,42,38,0.45);
+}
+.section-source {
+  font-size: 10px;
+  font-family: var(--font-m);
+  background: #EDE8E0;
+  color: #5A5040;
+  border: 0.5px solid #D8CDB8;
+  border-radius: 5px;
+  padding: 1px 7px;
+  text-decoration: none;
+}
+.section-source:hover { background: #E0D8CE; }
+
+/* ── PLATFORM ── */
+.platform-item {
+  padding: 14px 18px;
+  border-bottom: 0.5px solid rgba(46,42,38,0.06);
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 16px;
+  align-items: baseline;
+}
+.platform-item:last-child { border-bottom: none; }
+.platform-topic {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(46,42,38,0.5);
+  padding-top: 1px;
+}
+.platform-text {
+  font-size: 13px;
+  color: rgba(17,24,39,0.72);
+  line-height: 1.65;
+}
+
+/* ── VOTING RECORD ── */
+.vote-row {
+  padding: 13px 18px;
+  border-bottom: 0.5px solid rgba(46,42,38,0.06);
+  display: grid;
+  grid-template-columns: 48px 1fr auto;
+  gap: 14px;
+  align-items: start;
+}
+.vote-row:last-child { border-bottom: none; }
+.vote-pill {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 99px;
+  text-align: center;
+  white-space: nowrap;
+  margin-top: 1px;
+}
+.vote-yes { background: #CCDFD4; color: #1A3C28; }
+.vote-no  { background: #F0D8CC; color: #501E10; }
+.vote-bill { font-size: 12px; font-weight: 600; color: var(--char); margin-bottom: 3px; }
+.vote-desc { font-size: 12px; color: rgba(17,24,39,0.58); line-height: 1.55; }
+.vote-date { font-size: 10px; color: rgba(46,42,38,0.35); font-family: var(--font-m); white-space: nowrap; margin-top: 2px; }
+.vote-source-link {
+  font-size: 10px;
+  color: var(--terra);
+  text-decoration: none;
+  font-family: var(--font-m);
+  display: block;
+  margin-top: 3px;
+}
+.vote-source-link:hover { text-decoration: underline; }
+
+/* ── RATINGS ── */
+.ratings-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: rgba(46,42,38,0.08);
+}
+.rating-card {
+  background: #FFFDF9;
+  padding: 14px 16px;
+  text-align: center;
+}
+.rating-score {
+  font-family: var(--font-d);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--char);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.rating-score.good  { color: #1A3C28; }
+.rating-score.mixed { color: #4A3408; }
+.rating-score.low   { color: #501E10; }
+.rating-org { font-size: 11px; color: rgba(46,42,38,0.55); line-height: 1.4; margin-bottom: 2px; }
+.rating-year { font-size: 10px; color: rgba(46,42,38,0.3); font-family: var(--font-m); }
+
+/* ── FINANCE ── */
+.finance-total {
+  padding: 14px 18px;
+  border-bottom: 0.5px solid rgba(46,42,38,0.07);
+  font-size: 13px;
+  color: rgba(17,24,39,0.65);
+}
+.finance-total strong { color: var(--char); }
+.finance-row {
+  padding: 11px 18px;
+  border-bottom: 0.5px solid rgba(46,42,38,0.06);
+  display: grid;
+  grid-template-columns: 1fr 60px 48px;
+  gap: 12px;
+  align-items: center;
+}
+.finance-row:last-of-type { border-bottom: none; }
+.finance-src { font-size: 12px; color: rgba(17,24,39,0.7); }
+.finance-amt { font-size: 12px; font-weight: 600; color: var(--char); text-align: right; }
+.finance-pct { font-size: 11px; color: rgba(46,42,38,0.4); text-align: right; font-family: var(--font-m); }
+.finance-bar-wrap {
+  padding: 0 18px 14px;
+  border-bottom: 0.5px solid rgba(46,42,38,0.07);
+}
+.finance-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+.finance-bar-label { font-size: 11px; color: rgba(46,42,38,0.55); min-width: 160px; }
+.finance-bar-track { flex: 1; height: 6px; background: rgba(46,42,38,0.08); border-radius: 3px; overflow: hidden; }
+.finance-bar-fill { height: 100%; background: var(--terra); border-radius: 3px; opacity: 0.7; }
+.finance-note {
+  padding: 10px 18px;
+  font-size: 11px;
+  color: rgba(46,42,38,0.4);
+  font-family: var(--font-m);
+  line-height: 1.6;
+}
+
+/* ── STATEMENTS ── */
+.statement-item {
+  padding: 16px 18px;
+  border-bottom: 0.5px solid rgba(46,42,38,0.06);
+}
+.statement-item:last-child { border-bottom: none; }
+.statement-quote {
+  font-size: 13px;
+  color: rgba(17,24,39,0.75);
+  line-height: 1.7;
+  font-style: italic;
+  margin-bottom: 8px;
+}
+.statement-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.statement-source {
+  font-size: 10px;
+  font-family: var(--font-m);
+  color: rgba(46,42,38,0.4);
+}
+.statement-date {
+  font-size: 10px;
+  font-family: var(--font-m);
+  color: rgba(46,42,38,0.3);
+}
+.statement-link {
+  font-size: 10px;
+  color: var(--terra);
+  text-decoration: none;
+  font-family: var(--font-m);
+}
+.statement-link:hover { text-decoration: underline; }
+.statement-tag {
+  font-size: 10px;
+  font-weight: 500;
+  padding: 1px 8px;
+  border-radius: 99px;
+  margin-left: auto;
+}
+.social-label {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(46,42,38,0.35);
+  background: rgba(46,42,38,0.05);
+  border-radius: 4px;
+  padding: 2px 6px;
+}
+
+/* ── STANCES ── */
+.stance-item {
+  padding: 14px 18px;
+  border-bottom: 0.5px solid rgba(46,42,38,0.06);
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 16px;
+  align-items: baseline;
+}
+.stance-item:last-child { border-bottom: none; }
+.stance-issue {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(46,42,38,0.5);
+  padding-top: 1px;
+}
+.stance-text {
+  font-size: 13px;
+  color: rgba(17,24,39,0.72);
+  line-height: 1.65;
+}
+
+/* ── ENDORSEMENTS ── */
+.endorsements-grid {
+  padding: 16px 18px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+.endorsement-tag {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 4px 12px;
+  border-radius: 99px;
+  background: #F0EAE0;
+  color: rgba(46,42,38,0.7);
+  border: 0.5px solid rgba(46,42,38,0.1);
+}
+.endorsement-type {
+  font-size: 9px;
+  color: rgba(46,42,38,0.4);
+  font-weight: 400;
+  margin-left: 2px;
+}
+
+/* ── ELECTIONS ── */
+.election-row {
+  padding: 13px 18px;
+  border-bottom: 0.5px solid rgba(46,42,38,0.06);
+  display: grid;
+  grid-template-columns: 52px 1fr auto;
+  gap: 14px;
+  align-items: start;
+}
+.election-row:last-child { border-bottom: none; }
+.election-year {
+  font-family: var(--font-d);
+  font-size: 16px;
+  font-weight: 700;
+  color: rgba(46,42,38,0.3);
+  line-height: 1.2;
+}
+.election-race { font-size: 12px; font-weight: 600; color: var(--char); margin-bottom: 2px; }
+.election-opponent { font-size: 12px; color: rgba(17,24,39,0.5); margin-bottom: 3px; }
+.election-notes { font-size: 11px; color: rgba(17,24,39,0.45); line-height: 1.5; }
+.election-result {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 99px;
+  white-space: nowrap;
+}
+.result-won { background: #CCDFD4; color: #1A3C28; }
+.result-lost { background: #F0D8CC; color: #501E10; }
+.election-pct {
+  font-size: 11px;
+  color: rgba(46,42,38,0.4);
+  font-family: var(--font-m);
+  text-align: right;
+  margin-top: 4px;
+}
+
+/* ── COMMITTEES ── */
+.committee-row {
+  padding: 11px 18px;
+  border-bottom: 0.5px solid rgba(46,42,38,0.06);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.committee-row:last-child { border-bottom: none; }
+.committee-name { font-size: 13px; color: rgba(17,24,39,0.72); }
+.committee-role {
+  font-size: 10px;
+  color: rgba(46,42,38,0.45);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* ── WHAT TO WATCH ── */
+.watch-item {
+  padding: 14px 18px;
+  border-bottom: 0.5px solid rgba(46,42,38,0.06);
+}
+.watch-item:last-child { border-bottom: none; }
+.watch-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--char);
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.watch-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--terra);
+  flex-shrink: 0;
+}
+.watch-desc {
+  font-size: 12px;
+  color: rgba(17,24,39,0.6);
+  line-height: 1.6;
+}
+
+/* ── ALL SOURCES ── */
+.source-list {
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.source-list-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.source-list-link {
+  font-size: 12px;
+  color: var(--terra);
+  text-decoration: none;
+  font-family: var(--font-m);
+}
+.source-list-link:hover { text-decoration: underline; }
+.source-arrow { font-size: 10px; color: rgba(46,42,38,0.3); }
+
+/* ── UPDATED NOTE ── */
+.updated-note {
+  font-size: 11px;
+  color: rgba(46,42,38,0.35);
+  font-family: var(--font-m);
+  padding: 20px 0 32px;
+  text-align: center;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .profile-body {
+    grid-template-columns: 1fr;
+  }
+  .jump-nav { display: none; }
+  .platform-item { grid-template-columns: 1fr; gap: 4px; }
+  .stance-item { grid-template-columns: 1fr; gap: 4px; }
+  .vote-row { grid-template-columns: 44px 1fr; }
+  .vote-date { display: none; }
+  .ratings-grid { grid-template-columns: repeat(2, 1fr); }
+  .finance-row { grid-template-columns: 1fr 60px; }
+  .finance-pct { display: none; }
+  .election-row { grid-template-columns: 44px 1fr; }
+  .election-pct { display: none; }
+}
+
+@media (max-width: 480px) {
+  .profile-name { font-size: 26px; }
+  .ratings-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-left">
+    <a class="nav-logo-link" href="index.html">
+      <svg class="eye-mark" viewBox="0 0 28 28" fill="none">
+        <circle cx="14" cy="14" r="13" fill="#2E2A26"/>
+        <ellipse cx="14" cy="14" rx="8" ry="5.5" fill="#FAF4EC"/>
+        <circle cx="14" cy="14" r="3.5" fill="#2E2A26"/>
+        <circle cx="14" cy="14" r="2.2" fill="#C4633A"/>
+        <circle cx="15.1" cy="12.9" r="0.7" fill="#FAF4EC"/>
+      </svg>
+      <span class="wordmark">Plainview</span>
+    </a>
+  </div>
+  <div class="nav-links">
+    <a href="index.html">Browse candidates</a>
+    <a href="about.html">About</a>
+    <a href="editorial-policy.html">Editorial policy</a>
+  </div>
+  <button class="nav-toggle" onclick="document.getElementById('navDrawer').classList.toggle('open')" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-drawer" id="navDrawer">
+  <a href="index.html">Browse candidates</a>
+  <a href="about.html">About</a>
+  <a href="editorial-policy.html">Editorial policy</a>
+</div>
+
+<!-- PROFILE HEADER -->
+<div class="profile-header">
+  <div class="profile-header-inner">
+    <a class="back-link" href="index.html">← Back to all candidates</a>
+    <div class="profile-header-top">
+      <div>
+        <div class="profile-name" id="pName"></div>
+        <div class="profile-office" id="pOffice"></div>
+        <div class="profile-badges" id="pBadges"></div>
+      </div>
+    </div>
+    <div class="profile-meta" id="pMeta"></div>
+  </div>
+</div>
+
+<!-- PROFILE BODY -->
+<div class="profile-body">
+
+  <!-- MAIN COLUMN -->
+  <div class="main-col" id="mainCol"></div>
+
+  <!-- SIDEBAR -->
+  <div>
+    <!-- Jump nav -->
+    <div class="jump-nav" id="jumpNav">
+      <div class="jump-nav-title">Jump to section</div>
+    </div>
+
+    <!-- Office info -->
+    <div class="office-box" id="officeBox"></div>
+  </div>
+
+</div>
+
+<div class="updated-note" id="updatedNote"></div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <svg width="24" height="24" viewBox="0 0 28 28" fill="none">
+        <circle cx="14" cy="14" r="13" fill="#2E2A26" stroke="rgba(250,244,236,0.12)" stroke-width="0.5"/>
+        <ellipse cx="14" cy="14" rx="8" ry="5.5" fill="#FAF4EC"/>
+        <circle cx="14" cy="14" r="3.5" fill="#2E2A26"/>
+        <circle cx="14" cy="14" r="2.2" fill="#C4633A"/>
+        <circle cx="15.1" cy="12.9" r="0.7" fill="#FAF4EC"/>
+      </svg>
+      <div>
+        <div class="footer-wordmark">Plainview</div>
+        <div class="footer-tagline">Know who you're voting for.</div>
+      </div>
+    </div>
+    <div class="footer-links">
+      <a href="index.html">Browse candidates</a>
+      <a href="about.html">About</a>
+      <a href="editorial-policy.html">Editorial policy</a>
+    </div>
+  </div>
+  <div class="footer-note">
+    Plainview doesn't take money from candidates, campaigns, or political organizations. All candidate information comes from public records, with sources attached. A National Student Council / Glisten project.
+  </div>
+</footer>
+
+<script src="candidates.js"></script>
+<script>
+
+// ── Find candidate ──
+const C = CANDIDATES.find(c => c.slug === 'barbara-lee');
+const P = C.profile;
+
+// ── Helpers ──
+function tagHtml(t) {
+  const cfg = TAGS[t] || { bg:'#E8E4DC', c:'#3A3428' };
+  return `<span style="font-size:10px;font-weight:500;padding:2px 9px;border-radius:99px;background:${cfg.bg};color:${cfg.c}">${t}</span>`;
+}
+function partyBadge(p) {
+  const m = { dem:'b-dem Democrat', rep:'b-rep Republican', ind:'b-ind Independent' };
+  const cls = m[p] || 'b-open Other';
+  const [c, label] = cls.split(' ');
+  return `<span class="badge ${c}">${label}</span>`;
+}
+function statusBadge(s) {
+  const m = { incumbent:'b-inc Incumbent', challenger:'b-chl Challenger' };
+  const cls = m[s] || 'b-open';
+  const [c, label] = (cls + ' ' + s).split(' ');
+  return `<span class="badge ${c}">${s.charAt(0).toUpperCase()+s.slice(1)}</span>`;
+}
+function ratingColor(score) {
+  if (score === 'F') return 'low';
+  const n = parseInt(score);
+  if (isNaN(n)) return '';
+  if (n >= 75) return 'good';
+  if (n >= 40) return 'mixed';
+  return 'low';
+}
+
+// ── Header ──
+document.getElementById('pName').textContent = C.name;
+document.getElementById('pOffice').textContent = P.office_detail.title + ' · ' + P.office_detail.district;
+document.getElementById('pBadges').innerHTML = partyBadge(C.party) + statusBadge(C.status);
+
+document.getElementById('pMeta').innerHTML = `
+  <div class="meta-item">
+    <div class="meta-label">Term</div>
+    <div class="meta-val">${P.office_detail.term}</div>
+  </div>
+  <div class="meta-item">
+    <div class="meta-label">Next election</div>
+    <div class="meta-val">${P.office_detail.next_election}</div>
+  </div>
+  <div class="meta-item">
+    <div class="meta-label">Official site</div>
+    <div class="meta-val"><a href="${P.office_detail.official_site}" target="_blank" rel="noopener">barbaralee.senate.gov ↗</a></div>
+  </div>
+  <div class="meta-item">
+    <div class="meta-label">Last updated</div>
+    <div class="meta-val">${C.updated}</div>
+  </div>
+`;
+
+// ── Office box ──
+document.getElementById('officeBox').innerHTML = `
+  <div class="office-box-title">About this office</div>
+  <div class="office-row"><span class="office-key">Office</span><span class="office-val">${P.office_detail.title}</span></div>
+  <div class="office-row"><span class="office-key">District</span><span class="office-val">${P.office_detail.district}</span></div>
+  <div class="office-row"><span class="office-key">Term length</span><span class="office-val">6 years</span></div>
+  <div class="office-row"><span class="office-key">Next election</span><span class="office-val">${P.office_detail.next_election}</span></div>
+  <div class="office-desc">${P.office_detail.office_description}</div>
+  <div class="social-links">
+    <a class="social-link" href="${P.office_detail.twitter}" target="_blank" rel="noopener">Twitter/X ↗</a>
+    <a class="social-link" href="${P.office_detail.instagram}" target="_blank" rel="noopener">Instagram ↗</a>
+  </div>
+`;
+
+// ── Sections config ──
+const SECTIONS = [
+  { id: 'platform',    label: 'Platform' },
+  { id: 'voting',      label: 'Voting record' },
+  { id: 'ratings',     label: 'Org ratings' },
+  { id: 'finance',     label: 'Campaign finance' },
+  { id: 'statements',  label: 'Statements' },
+  { id: 'stances',     label: 'Issue stances' },
+  { id: 'endorsements',label: 'Endorsements' },
+  { id: 'elections',   label: 'Election history' },
+  { id: 'committees',  label: 'Committees' },
+  { id: 'watch',       label: 'What to watch' },
+  { id: 'sources',     label: 'All sources' },
+];
+
+// ── Build jump nav ──
+const jumpNav = document.getElementById('jumpNav');
+SECTIONS.forEach(s => {
+  const a = document.createElement('a');
+  a.href = `#${s.id}`;
+  a.innerHTML = `<span class="jump-dot"></span>${s.label}`;
+  jumpNav.appendChild(a);
+});
+
+// ── Build main content ──
+const main = document.getElementById('mainCol');
+
+function block(id, title, sourceLabel, sourceUrl, innerHtml) {
+  return `
+    <div class="section-block" id="${id}">
+      <div class="section-block-head">
+        <div class="section-block-title">${title}</div>
+        ${sourceLabel ? `<a class="section-source" href="${sourceUrl||'#'}" target="_blank" rel="noopener">${sourceLabel}</a>` : ''}
+      </div>
+      ${innerHtml}
+    </div>
+  `;
+}
+
+// Platform
+const platformHtml = P.platform_full.map(p => `
+  <div class="platform-item">
+    <div class="platform-topic">${p.topic}</div>
+    <div class="platform-text">${p.text}</div>
+  </div>
+`).join('');
+
+// Tags row
+const tagsHtml = `<div style="padding:12px 18px;display:flex;gap:6px;flex-wrap:wrap;border-top:0.5px solid rgba(46,42,38,0.06)">${C.tags.map(tagHtml).join('')}</div>`;
+
+// Voting record
+const votingHtml = P.voting_record.map(v => `
+  <div class="vote-row">
+    <div><div class="vote-pill ${v.vote==='Yes'?'vote-yes':'vote-no'}">${v.vote}</div></div>
+    <div>
+      <div class="vote-bill">${v.bill}</div>
+      <div class="vote-desc">${v.description}</div>
+      <a class="vote-source-link" href="${v.source_url}" target="_blank" rel="noopener">→ ${v.source}</a>
+    </div>
+    <div class="vote-date">${v.date}</div>
+  </div>
+`).join('');
+
+// Ratings
+const ratingsHtml = `<div class="ratings-grid">${P.ratings.map(r => `
+  <div class="rating-card">
+    <div class="rating-score ${ratingColor(r.score)}">${r.score}</div>
+    <div class="rating-org">${r.org}</div>
+    <div class="rating-year">${r.year}</div>
+  </div>
+`).join('')}</div>`;
+
+// Finance
+const maxAmt = Math.max(...P.finance_breakdown.map(f => parseInt(f.amt.replace(/\D/g,''))));
+const financeRows = P.finance_breakdown.map(f => `
+  <div class="finance-row">
+    <div class="finance-src">${f.src}</div>
+    <div class="finance-amt">${f.amt}</div>
+    <div class="finance-pct">${f.pct}</div>
+  </div>
+`).join('');
+const financeBars = `<div class="finance-bar-wrap">${P.finance_breakdown.map(f => {
+  const pct = (parseInt(f.amt.replace(/\D/g,'')) / maxAmt * 100).toFixed(0);
+  return `<div class="finance-bar-row">
+    <div class="finance-bar-label">${f.src}</div>
+    <div class="finance-bar-track"><div class="finance-bar-fill" style="width:${pct}%"></div></div>
+    <div style="font-size:11px;color:rgba(46,42,38,0.45);font-family:var(--font-m);min-width:36px;text-align:right">${f.amt}</div>
+  </div>`;
+}).join('')}</div>`;
+const financeHtml = `
+  <div class="finance-total">Total raised: <strong>${P.finance_total}</strong></div>
+  ${financeRows}
+  ${financeBars}
+  <div class="finance-note">${P.finance_notes}</div>
+`;
+
+// Statements (press)
+const statementsHtml = P.statements.map(s => `
+  <div class="statement-item">
+    <div class="statement-quote">"${s.quote}"</div>
+    <div class="statement-meta">
+      <span class="statement-source">${s.source}</span>
+      <span class="statement-date">· ${s.date}</span>
+      <a class="statement-link" href="${s.url}" target="_blank" rel="noopener">→ Source</a>
+      ${tagHtml(s.topic)}
+    </div>
+  </div>
+`).join('') + P.social_statements.map(s => `
+  <div class="statement-item">
+    <div class="statement-quote">"${s.quote}"</div>
+    <div class="statement-meta">
+      <span class="social-label">Social media</span>
+      <span class="statement-source">${s.platform}</span>
+      <span class="statement-date">· ${s.date}</span>
+      <a class="statement-link" href="${s.url}" target="_blank" rel="noopener">→ Source</a>
+      ${tagHtml(s.topic)}
+    </div>
+  </div>
+`).join('');
+
+// Stances
+const stancesHtml = P.stances.map(s => `
+  <div class="stance-item">
+    <div class="stance-issue">${s.issue}</div>
+    <div class="stance-text">${s.text}</div>
+  </div>
+`).join('');
+
+// Endorsements
+const endorsementsHtml = `<div class="endorsements-grid">${P.endorsements.map(e => `
+  <div class="endorsement-tag">${e.org} <span class="endorsement-type">· ${e.type}</span></div>
+`).join('')}</div>`;
+
+// Elections
+const electionsHtml = P.elections.map(e => `
+  <div class="election-row">
+    <div class="election-year">${e.year}</div>
+    <div>
+      <div class="election-race">${e.race}</div>
+      <div class="election-opponent">vs. ${e.opponent}</div>
+      <div class="election-notes">${e.notes}</div>
+    </div>
+    <div>
+      <div class="election-result ${e.result==='Won'?'result-won':'result-lost'}">${e.result}</div>
+      <div class="election-pct">${e.vote_pct}</div>
+    </div>
+  </div>
+`).join('');
+
+// Committees
+const committeesHtml = P.committees.map(c => `
+  <div class="committee-row">
+    <div class="committee-name">${c.name}</div>
+    <div class="committee-role">${c.role}</div>
+  </div>
+`).join('');
+
+// What to watch
+const watchHtml = P.watch.map(w => `
+  <div class="watch-item">
+    <div class="watch-title"><span class="watch-dot"></span>${w.item}</div>
+    <div class="watch-desc">${w.description}</div>
+  </div>
+`).join('');
+
+// All sources
+const sourcesHtml = `<div class="source-list">${P.all_sources.map(s => `
+  <div class="source-list-item">
+    <span class="source-arrow">→</span>
+    <a class="source-list-link" href="${s.url}" target="_blank" rel="noopener">${s.name}</a>
+  </div>
+`).join('')}</div>`;
+
+// ── Inject all sections ──
+main.innerHTML =
+  block('platform',     'Official platform & policy positions', 'Candidate website', P.office_detail.official_site, platformHtml + tagsHtml) +
+  block('voting',       'Voting record', 'Congress.gov', 'https://www.congress.gov/member/barbara-lee/L000551', votingHtml) +
+  block('ratings',      'Organization ratings & scorecards', null, null, ratingsHtml) +
+  block('finance',      'Campaign finance', 'OpenSecrets', P.finance_source_url, financeHtml) +
+  block('statements',   'Press & social media statements', null, null, statementsHtml) +
+  block('stances',      'Stance on key issues', null, null, stancesHtml) +
+  block('endorsements', 'Endorsements', null, null, endorsementsHtml) +
+  block('elections',    'Election history', 'Ballotpedia', 'https://ballotpedia.org/Barbara_Lee', electionsHtml) +
+  block('committees',   'Committee assignments', null, null, committeesHtml) +
+  block('watch',        'What to watch', null, null, watchHtml) +
+  block('sources',      'All sources used in this profile', null, null, sourcesHtml);
+
+document.getElementById('updatedNote').textContent = `Profile last updated ${C.updated} · All information sourced from public records`;
+
+// ── Active jump nav on scroll ──
+const sectionEls = SECTIONS.map(s => document.getElementById(s.id)).filter(Boolean);
+const jumpLinks  = jumpNav.querySelectorAll('a');
+
+window.addEventListener('scroll', () => {
+  let current = '';
+  sectionEls.forEach(el => {
+    if (el.getBoundingClientRect().top <= 100) current = el.id;
+  });
+  jumpLinks.forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  });
+}, { passive: true });
+
+</script>
+</body>
+</html>
