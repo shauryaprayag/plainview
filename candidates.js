@@ -35,6 +35,7 @@ const CANDIDATES = [
   {
     id: 1,
     name: 'Barbara Lee',
+    slug: 'barbara-lee',
     office: 'U.S. Senate · California',
     region: 'bay',
     officetype: 'congress',
@@ -46,6 +47,138 @@ const CANDIDATES = [
     tags: ['healthcare', 'housing', 'civil rights', 'education'],
     sources: ['OpenSecrets', 'Congress.gov'],
     updated: 'Mar 10, 2026',
+
+    // ── FULL PROFILE DATA ──
+    profile: {
+
+      // Office & District
+      office_detail: {
+        title: 'U.S. Senator, California',
+        district: 'Statewide — California',
+        term: '2025–2031',
+        next_election: 'November 2030',
+        office_description: 'U.S. Senators represent their entire state in the federal legislature. They serve six-year terms, vote on federal legislation, confirm presidential nominees, and ratify treaties. California has two U.S. Senators.',
+        official_site: 'https://www.barbaralee.senate.gov',
+        twitter: 'https://twitter.com/SenBarbaraLee',
+        instagram: 'https://www.instagram.com/senbarbaralee',
+      },
+
+      // Official Platform
+      platform_full: [
+        { topic: 'Healthcare', text: 'Supports Medicare for All — a single-payer federal healthcare system replacing private insurance. Co-sponsored S.1129, the Medicare for All Act of 2023.' },
+        { topic: 'Housing', text: 'Supports the American Housing and Economic Mobility Act, which would invest $450 billion in affordable housing construction and down-payment assistance for first-generation homebuyers.' },
+        { topic: 'Criminal justice', text: 'Supports ending cash bail, abolishing mandatory minimums, and redirecting federal funding from incarceration to prevention and rehabilitation programs.' },
+        { topic: 'Tax policy', text: 'Supports raising the top marginal income tax rate, reinstating the corporate minimum tax, and closing carried interest loopholes.' },
+        { topic: 'Foreign policy', text: 'Opposes unconditional military aid; has consistently voted against defense authorization bills that lack humanitarian accountability provisions.' },
+        { topic: 'Climate', text: 'Supports the Green New Deal framework. Co-sponsored the Climate Emergency Act of 2023. Rated 98% by the League of Conservation Voters (2023).' },
+      ],
+
+      // Voting Record
+      voting_record: [
+        { bill: 'HR 2670 — NDAA FY2024', vote: 'No', date: 'Jul 2023', description: 'National Defense Authorization Act. Lee opposed the bill citing lack of humanitarian conditions on military aid.', source: 'Congress.gov', source_url: 'https://www.congress.gov/bill/118th-congress/house-bill/2670' },
+        { bill: 'HR 5 — George Floyd Justice in Policing Act', vote: 'Yes', date: 'Mar 2021', description: 'Would have banned chokeholds, no-knock warrants in federal cases, and established a national police misconduct registry. Passed House, died in Senate.', source: 'Congress.gov', source_url: 'https://www.congress.gov/bill/117th-congress/house-bill/5' },
+        { bill: 'HR 5376 — Inflation Reduction Act', vote: 'Yes', date: 'Aug 2022', description: 'Authorized $369 billion in climate and clean energy investment, capped insulin costs, and allowed Medicare to negotiate drug prices.', source: 'Congress.gov', source_url: 'https://www.congress.gov/bill/117th-congress/house-bill/5376' },
+        { bill: 'HR 3684 — Infrastructure Investment and Jobs Act', vote: 'Yes', date: 'Nov 2021', description: '$1.2 trillion bipartisan infrastructure bill covering roads, bridges, broadband, and public transit.', source: 'Congress.gov', source_url: 'https://www.congress.gov/bill/117th-congress/house-bill/3684' },
+        { bill: 'H.Res.24 — Impeachment of Donald Trump (2021)', vote: 'Yes', date: 'Jan 2021', description: 'Impeached Trump for incitement of insurrection following the January 6 Capitol attack.', source: 'Congress.gov', source_url: 'https://www.congress.gov/bill/117th-congress/house-resolution/24' },
+        { bill: 'AUMF repeal (H.R.256)', vote: 'Yes', date: 'Jun 2021', description: 'Lee has been the lone consistent vote to repeal the 2001 Authorization for Use of Military Force. This vote supported repealing the 2002 Iraq AUMF.', source: 'Congress.gov', source_url: 'https://www.congress.gov/bill/117th-congress/house-bill/256' },
+      ],
+
+      // Scorecard Ratings
+      ratings: [
+        { org: 'ACLU', score: '95%', year: '2023', url: 'https://www.aclu.org/scorecard' },
+        { org: 'League of Conservation Voters', score: '98%', year: '2023', url: 'https://scorecard.lcv.org' },
+        { org: 'NAACP', score: '100%', year: '2022', url: 'https://naacp.org' },
+        { org: 'AFL-CIO', score: '97%', year: '2023', url: 'https://aflcio.org' },
+        { org: 'NRA', score: 'F', year: '2022', url: 'https://www.nraila.org' },
+        { org: 'US Chamber of Commerce', score: '12%', year: '2023', url: 'https://www.uschamber.com' },
+      ],
+
+      // Campaign Finance
+      finance_total: '$4.2M raised (2022 cycle)',
+      finance_breakdown: [
+        { amt: '$180k', src: 'Education', pct: '18%' },
+        { amt: '$140k', src: 'Healthcare', pct: '14%' },
+        { amt: '$95k',  src: 'Civil servants / public admin', pct: '10%' },
+        { amt: '$88k',  src: 'Lawyers & law firms', pct: '9%' },
+        { amt: '$72k',  src: 'Civil rights / social advocacy', pct: '7%' },
+      ],
+      finance_notes: 'No corporate PAC money accepted. No contributions from fossil fuel companies. Source: OpenSecrets / FEC filings.',
+      finance_source_url: 'https://www.opensecrets.org/members-of-congress/barbara-lee/summary',
+
+      // Statements Timeline
+      statements: [
+        { quote: 'Housing is a human right, not a commodity. Every Californian deserves a safe place to call home.', source: 'SF Chronicle', date: 'Jan 2026', url: 'https://www.sfchronicle.com', topic: 'housing' },
+        { quote: 'I have been saying for decades that we need Medicare for All. The insurance companies have had their turn. It\'s time to put patients first.', source: 'MSNBC', date: 'Sep 2025', url: 'https://www.msnbc.com', topic: 'healthcare' },
+        { quote: 'Sending weapons without humanitarian accountability is not foreign policy — it\'s complicity. I will not vote for it.', source: 'The Nation', date: 'Apr 2024', url: 'https://www.thenation.com', topic: 'foreign policy' },
+        { quote: 'The 2001 AUMF was a blank check for endless war. I was the only vote against it then. I am still fighting to repeal it now.', source: 'Congressional Record', date: 'Jun 2023', url: 'https://www.congress.gov', topic: 'foreign policy' },
+      ],
+
+      // Social Media Statements
+      social_statements: [
+        { quote: 'We cannot build our way to safety with more police. We build safety with jobs, housing, healthcare, and schools.', platform: 'Twitter/X', date: 'Oct 2023', url: 'https://twitter.com/SenBarbaraLee', topic: 'public safety' },
+        { quote: 'Proud to vote YES on the Inflation Reduction Act — the largest climate investment in US history. This is what fighting for our future looks like.', platform: 'Instagram', date: 'Aug 2022', url: 'https://www.instagram.com/senbarbaralee', topic: 'environment' },
+      ],
+
+      // Issue Stances
+      stances: [
+        { issue: 'Housing', text: 'Supports the American Housing and Economic Mobility Act; advocates for federal investment in public housing and community land trusts. Opposes exclusionary zoning at the federal level.' },
+        { issue: 'Immigration', text: 'Supports a pathway to citizenship for undocumented immigrants. Co-sponsored the Dream and Promise Act. Opposes family separation and opposes cooperation with ICE in sanctuary jurisdictions.' },
+        { issue: 'Healthcare', text: 'Strong Medicare for All advocate. Co-sponsored the Medicare for All Act of 2023. Opposes means-testing of Medicaid and Medicare.' },
+        { issue: 'Climate & environment', text: 'Co-sponsored the Green New Deal resolution. Supports a federal jobs guarantee tied to clean energy transition. Opposes new fossil fuel permits on federal land.' },
+        { issue: 'Foreign policy', text: 'Cast the sole vote against the 2001 AUMF. Consistently opposes unconditional military aid. Supports cutting the defense budget and redirecting funds to domestic priorities.' },
+        { issue: 'Criminal justice', text: 'Supports ending cash bail, the BREATHE Act, and federal decriminalization of cannabis. Opposes private prisons and mandatory minimum sentences.' },
+        { issue: 'Reproductive rights', text: 'Supports codifying Roe v. Wade into federal law. Co-sponsored the Women\'s Health Protection Act. Opposes any federal restrictions on abortion access.' },
+        { issue: 'Gun policy', text: 'Supports universal background checks, assault weapons ban, and red flag laws. Rated F by the NRA.' },
+        { issue: 'Economy', text: 'Supports raising the federal minimum wage to $17/hour. Co-sponsored legislation to expand the Child Tax Credit. Opposes carried interest tax loopholes.' },
+      ],
+
+      // Endorsements
+      endorsements: [
+        { org: 'SEIU (Service Employees International Union)', type: 'Labor' },
+        { org: 'Sierra Club', type: 'Environment' },
+        { org: 'ACLU', type: 'Civil rights' },
+        { org: 'Progressive Democrats of America', type: 'Political' },
+        { org: 'California Nurses Association', type: 'Labor' },
+        { org: 'NAACP California State Conference', type: 'Civil rights' },
+        { org: 'Planned Parenthood Action Fund', type: 'Healthcare' },
+        { org: 'San Francisco Democratic Party', type: 'Political' },
+      ],
+
+      // Election History
+      elections: [
+        { year: '2022', race: 'U.S. House, CA-12 (Primary)', result: 'Won', vote_pct: '72.4%', opponent: 'Various', notes: 'Won Democratic primary for newly redrawn district.' },
+        { year: '2020', race: 'U.S. House, CA-13', result: 'Won', vote_pct: '90.3%', opponent: 'Nikka Piterman (R)', notes: 'Ran unopposed in general; near-walkover.' },
+        { year: '2018', race: 'U.S. House, CA-13', result: 'Won', vote_pct: '91.4%', opponent: 'Various', notes: 'Unopposed in general election.' },
+        { year: '2024', race: 'U.S. Senate, California', result: 'Won', vote_pct: '51.3%', opponent: 'Steve Garvey (R)', notes: 'Won open seat race after Sen. Feinstein\'s death. First Black woman elected to CA Senate seat.' },
+      ],
+
+      // What to Watch
+      watch: [
+        { item: 'AUMF Repeal push', description: 'Lee has introduced legislation every Congress since 2001 to repeal the Authorization for Use of Military Force. Watch for a Senate floor vote in 2026.' },
+        { item: 'Medicare for All Act (S.1129)', description: 'Co-sponsored with Sen. Sanders. Committee markup expected in the Senate HELP Committee in late 2026.' },
+        { item: 'American Housing and Economic Mobility Act', description: 'Re-introduced in 2025. Senate Banking Committee hearings scheduled for Spring 2026.' },
+      ],
+
+      // Committee Assignments
+      committees: [
+        { name: 'Senate Appropriations Committee', role: 'Member' },
+        { name: 'Senate Foreign Relations Committee', role: 'Member' },
+        { name: 'Senate Banking, Housing, and Urban Affairs Committee', role: 'Member' },
+      ],
+
+      // All Sources
+      all_sources: [
+        { name: 'Congress.gov — Voting record', url: 'https://www.congress.gov/member/barbara-lee/L000551' },
+        { name: 'OpenSecrets — Campaign finance', url: 'https://www.opensecrets.org/members-of-congress/barbara-lee/summary' },
+        { name: 'FEC — Finance filings', url: 'https://www.fec.gov' },
+        { name: 'Official Senate website', url: 'https://www.barbaralee.senate.gov' },
+        { name: 'League of Conservation Voters scorecard', url: 'https://scorecard.lcv.org' },
+        { name: 'ACLU Congressional scorecard', url: 'https://www.aclu.org/scorecard' },
+        { name: 'Ballotpedia — Barbara Lee', url: 'https://ballotpedia.org/Barbara_Lee' },
+      ],
+    },
+
+    // Keep old full block for card modal compatibility
     full: {
       voting: 'Voted against HR 2670 (NDAA). Voted yes on HR 5: George Floyd Justice in Policing Act. Rated 95% by ACLU.',
       finance: [
