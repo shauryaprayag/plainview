@@ -26,10 +26,10 @@
 
 /* body grid */
 .pb{max-width:1200px;margin:0 auto;padding:28px 24px 48px;display:grid;grid-template-columns:1fr 224px;gap:24px;align-items:start}
-.sc{display:flex;flex-direction:column;gap:12px}
+.sc{display:flex;flex-direction:column;gap:12px;align-self:start;position:sticky;top:68px}
 
 /* jump nav — sticky */
-.jnav{background:#FFFDF9;border:0.5px solid rgba(46,42,38,0.12);border-radius:10px;overflow:hidden;position:sticky;top:68px;max-height:calc(100vh - 88px);overflow-y:auto}
+.jnav{background:#FFFDF9;border:0.5px solid rgba(46,42,38,0.12);border-radius:10px;overflow:hidden;max-height:calc(100vh - 180px);overflow-y:auto}
 .jnav-h{padding:10px 14px;font-size:9px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(46,42,38,0.38);border-bottom:0.5px solid rgba(46,42,38,0.08);background:rgba(46,42,38,0.02)}
 .jnav a{display:flex;align-items:center;gap:8px;padding:8px 14px;font-size:11px;font-weight:500;color:rgba(17,24,39,0.55);text-decoration:none;border-bottom:0.5px solid rgba(46,42,38,0.05);transition:all .15s}
 .jnav a:last-child{border-bottom:none}
@@ -80,7 +80,7 @@
 .vdt{font-size:10px;color:rgba(46,42,38,0.32);font-family:var(--font-m);text-align:right;padding-top:2px}
 
 /* ratings */
-.rg{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(46,42,38,0.08)}
+.rg{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(46,42,38,0.08);flex:1}
 .rc{background:#FFFDF9;padding:14px 12px;text-align:center}
 .rs{font-family:var(--font-d);font-size:22px;font-weight:700;line-height:1;margin-bottom:4px}
 .sg{color:#1A3C28}.sm{color:#4A3408}.sl{color:#501E10}
@@ -113,7 +113,7 @@
 .sd{font-size:10px;font-family:var(--font-m);color:rgba(46,42,38,0.3)}
 .sl2{font-size:10px;color:var(--terra);text-decoration:none;font-family:var(--font-m)}
 .sl2:hover{text-decoration:underline}
-.socbadge{font-size:9px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;color:rgba(46,42,38,0.35);background:rgba(46,42,38,0.05);border-radius:4px;padding:2px 6px}
+.socbadge{font-size:9px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;color:rgba(46,42,38,0.35);background:rgba(46,42,38,0.05);border-radius:4px;padding:2px 6px}.needs-verify{font-size:9px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:#501E10;background:#F0D8CC;border-radius:4px;padding:2px 7px}.placeholder-quote{color:rgba(46,42,38,0.35);font-style:normal;font-size:12px;background:#F5EFE6;border-radius:6px;padding:10px 14px;border:0.5px solid rgba(46,42,38,0.1)}
 
 /* stances */
 .sti{padding:13px 16px;border-bottom:0.5px solid rgba(46,42,38,0.06);display:grid;grid-template-columns:150px 1fr;gap:16px;align-items:baseline}
@@ -124,7 +124,7 @@
 .npt{font-size:12px;color:rgba(46,42,38,0.45);font-style:italic;line-height:1.6}
 
 /* endorsements */
-.ew{padding:14px 16px;display:flex;flex-wrap:wrap;gap:6px}
+.ew{padding:14px 16px;display:flex;flex-wrap:wrap;gap:6px;align-content:flex-start;flex:1}
 .ep{font-size:11px;font-weight:500;padding:4px 12px;border-radius:99px;background:#F0EAE0;color:rgba(46,42,38,0.7);border:0.5px solid rgba(46,42,38,0.1)}
 .et{font-size:9px;color:rgba(46,42,38,0.38);font-weight:400}
 
@@ -344,7 +344,14 @@ const finHtml='<div class="ft">Total raised: <strong>'+P.finance_total+'</strong
 
 // ── statements ──
 const allS=[...P.statements.map(s=>({...s,social:false})),...P.social_statements.map(s=>({...s,social:true}))];
-const statHtml=allS.map(s=>{const sp=s.social?'<span class="socbadge">Social media</span><span class="ss">'+s.platform+'</span>':'<span class="ss">'+s.source+'</span>';return '<div class="si"><div class="sq">"'+s.quote+'"</div><div class="sm2">'+sp+'<span class="sd">· '+s.date+'</span><a class="sl2" href="'+s.url+'" target="_blank" rel="noopener">→ Source</a>'+tg(s.topic)+'</div></div>';}).join('');
+const statHtml=allS.map(s=>{
+  if(s.needs_verification){
+    return '<div class="si"><div class="placeholder-quote">'+s.quote+'</div><div class="sm2" style="margin-top:8px"><span class="needs-verify">Needs verification</span><span class="sd" style="margin-left:4px">Replace with a verified verbatim quote before publishing.</span></div></div>';
+  }
+  const sp=s.social?'<span class="socbadge">Social media</span><span class="ss">'+s.platform+'</span>':'<span class="ss">'+s.source+'</span>';
+  const srcLink=s.url?'<a class="sl2" href="'+s.url+'" target="_blank" rel="noopener">→ Source</a>':'<span class="sd">Source URL needed</span>';
+  return '<div class="si"><div class="sq">"'+s.quote+'"</div><div class="sm2">'+sp+'<span class="sd">· '+s.date+'</span>'+srcLink+tg(s.topic)+'</div></div>';
+}).join('');
 
 // ── stances (all 16) ──
 const stanceHtml=P.stances.map(s=>{let v;if(s.sourced){v='<div class="stv">'+s.text+'</div>';}else{v='<div><div class="npb">No position found</div><div class="npt">'+s.text+'</div></div>';}return '<div class="sti"><div class="stk">'+s.issue+'</div>'+v+'</div>';}).join('');

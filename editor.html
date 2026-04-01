@@ -53,7 +53,7 @@ body{font-family:var(--font-b);background:#F2EBE1;color:var(--char);min-height:1
 .field .hint{font-size:10px;color:rgba(46,42,38,0.38);line-height:1.5}
 
 .repeatable{display:flex;flex-direction:column;gap:10px;margin-bottom:10px}
-.repeat-row{background:#F5EFE6;border:0.5px solid rgba(46,42,38,0.1);border-radius:8px;padding:14px;position:relative}
+.repeat-row{background:#F5EFE6;border:0.5px solid rgba(46,42,38,0.1);border-radius:8px;padding:10px 14px 14px;position:relative}
 .repeat-row-grid{display:grid;gap:10px}
 .repeat-label{font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:rgba(46,42,38,0.38);margin-bottom:8px}
 .btn-remove{position:absolute;top:10px;right:10px;background:rgba(196,99,58,0.08);border:0.5px solid rgba(196,99,58,0.2);color:var(--terra);font-size:11px;font-weight:600;border-radius:5px;padding:3px 8px;cursor:pointer;font-family:var(--font-b)}
@@ -457,12 +457,23 @@ function goTo(page){
 }
 
 // ── repeatable row builders ──
-function makeRow(container,fields,removeId){
+function makeRow(container,fields){
   const row=document.createElement('div');
   row.className='repeat-row';
+  row.style.paddingTop='36px';
+  const rm=document.createElement('button');
+  rm.className='btn-remove';rm.textContent='Remove';rm.style.cssText='position:absolute;top:8px;right:10px';
+  rm.onclick=()=>row.remove();
+  row.appendChild(rm);
   const g=document.createElement('div');
   g.className='repeat-row-grid';
-  g.style.gridTemplateColumns=fields.map(f=>f.w||'1fr').join(' ');
+  // Build column template: textareas always 1fr, others use w or 1fr
+  const cols=fields.map(f=>{
+    if(f.type==='textarea') return '1fr';
+    return f.w||'1fr';
+  });
+  g.style.gridTemplateColumns=cols.join(' ');
+  g.style.gap='10px';
   fields.forEach(f=>{
     const wrap=document.createElement('div');
     wrap.className='field';
@@ -470,9 +481,21 @@ function makeRow(container,fields,removeId){
     lbl.textContent=f.label;
     wrap.appendChild(lbl);
     let el;
-    if(f.type==='textarea'){el=document.createElement('textarea');el.rows=3;}
-    else if(f.type==='select'){el=document.createElement('select');(f.options||[]).forEach(o=>{const opt=document.createElement('option');opt.value=o.v||o;opt.textContent=o.l||o;el.appendChild(opt);});}
-    else{el=document.createElement('input');el.type=f.type||'text';}
+    if(f.type==='textarea'){
+      el=document.createElement('textarea');
+      el.rows=2;
+      el.style.minHeight='60px';
+    } else if(f.type==='select'){
+      el=document.createElement('select');
+      (f.options||[]).forEach(o=>{
+        const opt=document.createElement('option');
+        opt.value=o.v||o;opt.textContent=o.l||o;
+        el.appendChild(opt);
+      });
+    } else {
+      el=document.createElement('input');
+      el.type=f.type||'text';
+    }
     el.placeholder=f.placeholder||'';
     el.dataset.key=f.key;
     el.className='row-field';
@@ -480,10 +503,6 @@ function makeRow(container,fields,removeId){
     g.appendChild(wrap);
   });
   row.appendChild(g);
-  const rm=document.createElement('button');
-  rm.className='btn-remove';rm.textContent='Remove';
-  rm.onclick=()=>row.remove();
-  row.appendChild(rm);
   document.getElementById(container).appendChild(row);
 }
 
