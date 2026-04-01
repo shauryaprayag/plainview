@@ -29,7 +29,7 @@
 .sc{display:flex;flex-direction:column;gap:12px}
 
 /* jump nav — sticky */
-.jnav{background:#FFFDF9;border:0.5px solid rgba(46,42,38,0.12);border-radius:10px;overflow:hidden;position:sticky;top:68px}
+.jnav{background:#FFFDF9;border:0.5px solid rgba(46,42,38,0.12);border-radius:10px;overflow:hidden;position:sticky;top:68px;max-height:calc(100vh - 88px);overflow-y:auto}
 .jnav-h{padding:10px 14px;font-size:9px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(46,42,38,0.38);border-bottom:0.5px solid rgba(46,42,38,0.08);background:rgba(46,42,38,0.02)}
 .jnav a{display:flex;align-items:center;gap:8px;padding:8px 14px;font-size:11px;font-weight:500;color:rgba(17,24,39,0.55);text-decoration:none;border-bottom:0.5px solid rgba(46,42,38,0.05);transition:all .15s}
 .jnav a:last-child{border-bottom:none}
@@ -40,14 +40,14 @@
 
 /* section blocks */
 .mc{min-width:0;display:flex;flex-direction:column;gap:14px}
-.sb{background:#FFFDF9;border:0.5px solid rgba(46,42,38,0.12);border-radius:10px;overflow:hidden;scroll-margin-top:80px}
+.sb{background:#FFFDF9;border:0.5px solid rgba(46,42,38,0.12);border-radius:10px;overflow:hidden;scroll-margin-top:80px;display:flex;flex-direction:column}.sb>.sbh{flex-shrink:0}
 .sbh{padding:12px 16px;border-bottom:0.5px solid rgba(46,42,38,0.08);display:flex;align-items:center;justify-content:space-between;gap:12px;background:rgba(46,42,38,0.02)}
 .sbt{font-size:9px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(46,42,38,0.42)}
 .sbsrc{font-size:10px;font-family:var(--font-m);background:#EDE8E0;color:#5A5040;border:0.5px solid #D8CDB8;border-radius:5px;padding:1px 7px;text-decoration:none;white-space:nowrap}
 .sbsrc:hover{background:#E0D8CE}
 
 /* OPTION B: paired sections */
-.paired{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.paired{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:stretch}
 
 /* office info */
 .og{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(46,42,38,0.08)}
@@ -343,10 +343,7 @@ const notableDonors=P.finance_notable_donors.length?
 const finHtml='<div class="ft">Total raised: <strong>'+P.finance_total+'</strong></div>'+notableDonors+'<div class="pie-wrap">'+pieSvg+'<div class="pie-legend">'+legendHtml+'</div></div><div class="fn">'+P.finance_notes+'</div>';
 
 // ── statements ──
-const allS = [
-  ...(P.statements ?? []).map(s => ({ ...s, social: false })),
-  ...(P.social_statements ?? []).map(s => ({ ...s, social: true }))
-];
+const allS=[...P.statements.map(s=>({...s,social:false})),...P.social_statements.map(s=>({...s,social:true}))];
 const statHtml=allS.map(s=>{const sp=s.social?'<span class="socbadge">Social media</span><span class="ss">'+s.platform+'</span>':'<span class="ss">'+s.source+'</span>';return '<div class="si"><div class="sq">"'+s.quote+'"</div><div class="sm2">'+sp+'<span class="sd">· '+s.date+'</span><a class="sl2" href="'+s.url+'" target="_blank" rel="noopener">→ Source</a>'+tg(s.topic)+'</div></div>';}).join('');
 
 // ── stances (all 16) ──

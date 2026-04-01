@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plainview — Candidate Editor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --char:#2E2A26;--terra:#C4633A;--cream:#FAF4EC;--sand:#E8D8C4;
+  --font-d:'Fraunces',Georgia,serif;--font-b:'DM Sans',system-ui,sans-serif;--font-m:'Courier New',monospace;
+}
+body{font-family:var(--font-b);background:#F2EBE1;color:var(--char);min-height:100vh}
+.topbar{background:var(--char);height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 24px}
+.topbar-left{display:flex;align-items:center;gap:10px}
+.topbar-logo{font-family:var(--font-d);font-size:17px;color:var(--terra);font-weight:700}
+.topbar-badge{font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:rgba(250,244,236,0.35);border:0.5px solid rgba(255,255,255,0.12);border-radius:99px;padding:2px 8px;margin-left:2px}
+.topbar-note{font-size:11px;color:rgba(250,244,236,0.35)}
+
+.shell{display:grid;grid-template-columns:260px 1fr;min-height:calc(100vh - 52px)}
+
+/* sidebar nav */
+.sidenav{background:#EDE5D8;border-right:0.5px solid rgba(46,42,38,0.12);padding:20px 0;position:sticky;top:0;height:calc(100vh - 52px);overflow-y:auto}
+.sn-group{margin-bottom:20px}
+.sn-label{font-size:9px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(46,42,38,0.4);padding:0 18px;margin-bottom:4px}
+.sn-item{display:block;font-size:12px;font-weight:500;color:rgba(17,24,39,0.6);padding:7px 18px;cursor:pointer;text-decoration:none;transition:all .15s;border-left:2px solid transparent}
+.sn-item:hover{color:var(--char);background:rgba(46,42,38,0.04)}
+.sn-item.active{color:var(--char);font-weight:600;border-left-color:var(--terra);background:rgba(196,99,58,0.07)}
+
+/* main */
+.main{padding:32px 40px;max-width:860px}
+
+.section-title{font-family:var(--font-d);font-size:22px;color:var(--char);font-weight:700;margin-bottom:4px}
+.section-sub{font-size:13px;color:rgba(17,24,39,0.5);margin-bottom:24px;line-height:1.6}
+
+.card{background:#FFFDF9;border:0.5px solid rgba(46,42,38,0.12);border-radius:10px;padding:20px 22px;margin-bottom:20px}
+.card-title{font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(46,42,38,0.42);margin-bottom:14px;padding-bottom:8px;border-bottom:0.5px solid rgba(46,42,38,0.08)}
+
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.field-row.full{grid-template-columns:1fr}
+.field-row.three{grid-template-columns:1fr 1fr 1fr}
+.field{display:flex;flex-direction:column;gap:5px}
+.field label{font-size:11px;font-weight:600;color:rgba(46,42,38,0.55)}
+.field input,.field select,.field textarea{
+  font-family:var(--font-b);font-size:13px;color:var(--char);
+  background:var(--cream);border:0.5px solid rgba(46,42,38,0.18);border-radius:7px;
+  padding:8px 11px;transition:border-color .15s;
+}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--terra)}
+.field textarea{resize:vertical;min-height:72px;line-height:1.5}
+.field .hint{font-size:10px;color:rgba(46,42,38,0.38);line-height:1.5}
+
+.repeatable{display:flex;flex-direction:column;gap:10px;margin-bottom:10px}
+.repeat-row{background:#F5EFE6;border:0.5px solid rgba(46,42,38,0.1);border-radius:8px;padding:14px;position:relative}
+.repeat-row-grid{display:grid;gap:10px}
+.repeat-label{font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:rgba(46,42,38,0.38);margin-bottom:8px}
+.btn-remove{position:absolute;top:10px;right:10px;background:rgba(196,99,58,0.08);border:0.5px solid rgba(196,99,58,0.2);color:var(--terra);font-size:11px;font-weight:600;border-radius:5px;padding:3px 8px;cursor:pointer;font-family:var(--font-b)}
+.btn-remove:hover{background:rgba(196,99,58,0.16)}
+.btn-add{background:rgba(46,42,38,0.05);border:0.5px solid rgba(46,42,38,0.15);color:rgba(46,42,38,0.6);font-size:12px;font-weight:600;border-radius:7px;padding:8px 16px;cursor:pointer;font-family:var(--font-b);transition:all .15s;display:inline-flex;align-items:center;gap:6px}
+.btn-add:hover{background:rgba(46,42,38,0.09);color:var(--char)}
+
+.tags-picker{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+.tag-btn{font-size:11px;font-weight:500;padding:3px 11px;border-radius:99px;border:0.5px solid rgba(46,42,38,0.15);background:var(--cream);color:rgba(46,42,38,0.6);cursor:pointer;transition:all .15s;user-select:none}
+.tag-btn.selected{border-width:1.5px}
+
+.divider{height:0.5px;background:rgba(46,42,38,0.1);margin:24px 0}
+
+.generate-bar{background:var(--char);border-radius:10px;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:24px}
+.generate-bar-text{font-size:13px;color:rgba(250,244,236,0.6);line-height:1.5}
+.generate-bar-text strong{color:#FAF4EC}
+.btn-generate{background:var(--terra);border:none;color:#FAF4EC;font-size:13px;font-weight:600;border-radius:7px;padding:10px 22px;cursor:pointer;font-family:var(--font-b);transition:background .15s;white-space:nowrap}
+.btn-generate:hover{background:#A8522E}
+
+.output-wrap{margin-top:8px}
+.output-label{font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(46,42,38,0.42);margin-bottom:8px;display:flex;align-items:center;justify-content:space-between}
+.btn-copy{background:rgba(46,42,38,0.07);border:0.5px solid rgba(46,42,38,0.15);color:rgba(46,42,38,0.65);font-size:11px;font-weight:600;border-radius:5px;padding:4px 12px;cursor:pointer;font-family:var(--font-b);transition:all .15s}
+.btn-copy:hover{background:rgba(46,42,38,0.12)}
+.btn-copy.copied{background:rgba(26,60,40,0.1);border-color:rgba(26,60,40,0.3);color:#1A3C28}
+.output-box{background:#1C1A18;color:#E8D8C4;font-family:var(--font-m);font-size:12px;line-height:1.7;padding:18px;border-radius:8px;overflow-x:auto;white-space:pre;max-height:480px;overflow-y:auto;border:0.5px solid rgba(46,42,38,0.2)}
+
+.step-indicator{display:flex;align-items:center;gap:8px;margin-bottom:24px}
+.step{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600}
+.step.done{background:rgba(26,60,40,0.15);color:#1A3C28}
+.step.current{background:var(--terra);color:#FAF4EC}
+.step.pending{background:rgba(46,42,38,0.08);color:rgba(46,42,38,0.35)}
+.step-line{height:1px;width:20px;background:rgba(46,42,38,0.12)}
+
+.section-page{display:none}
+.section-page.active{display:block}
+
+@media(max-width:700px){
+  .shell{grid-template-columns:1fr}
+  .sidenav{display:none}
+  .field-row{grid-template-columns:1fr}
+  .field-row.three{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-left">
+    <svg width="26" height="26" viewBox="0 0 28 28" fill="none">
+      <circle cx="14" cy="14" r="13" fill="#2E2A26"/>
+      <ellipse cx="14" cy="14" rx="8" ry="5.5" fill="#FAF4EC"/>
+      <circle cx="14" cy="14" r="3.5" fill="#2E2A26"/>
+      <circle cx="14" cy="14" r="2.2" fill="#C4633A"/>
+      <circle cx="15.1" cy="12.9" r="0.7" fill="#FAF4EC"/>
+    </svg>
+    <span class="topbar-logo">Plainview</span>
+    <span class="topbar-badge">Candidate Editor</span>
+  </div>
+  <span class="topbar-note">Fill in the fields → Generate → Paste into candidates.js</span>
+</div>
+
+<div class="shell">
+  <nav class="sidenav">
+    <div class="sn-group">
+      <div class="sn-label">Profile sections</div>
+      <a class="sn-item active" onclick="goTo('basics')">01 · Basics</a>
+      <a class="sn-item" onclick="goTo('office')">02 · Office & district</a>
+      <a class="sn-item" onclick="goTo('platform')">03 · Platform</a>
+      <a class="sn-item" onclick="goTo('voting')">04 · Voting record</a>
+      <a class="sn-item" onclick="goTo('ratings')">05 · Org ratings</a>
+      <a class="sn-item" onclick="goTo('finance')">06 · Campaign finance</a>
+      <a class="sn-item" onclick="goTo('statements')">07 · Statements</a>
+      <a class="sn-item" onclick="goTo('stances')">08 · Issue stances</a>
+      <a class="sn-item" onclick="goTo('endorsements')">09 · Endorsements</a>
+      <a class="sn-item" onclick="goTo('elections')">10 · Election history</a>
+      <a class="sn-item" onclick="goTo('committees')">11 · Committees</a>
+      <a class="sn-item" onclick="goTo('watch')">12 · What to watch</a>
+      <a class="sn-item" onclick="goTo('sources')">13 · Sources</a>
+    </div>
+    <div class="sn-group">
+      <div class="sn-label">Output</div>
+      <a class="sn-item" onclick="goTo('generate')">Generate code →</a>
+    </div>
+  </nav>
+
+  <div class="main">
+
+    <!-- 01 BASICS -->
+    <div class="section-page active" id="page-basics">
+      <div class="section-title">01 — Basics</div>
+      <div class="section-sub">Core identifying information. The slug becomes the filename — e.g. "adam-schiff" → adam-schiff.html</div>
+
+      <div class="card">
+        <div class="card-title">Identity</div>
+        <div class="field-row">
+          <div class="field"><label>Full name</label><input id="name" type="text" placeholder="Adam Schiff"></div>
+          <div class="field"><label>Slug (lowercase, hyphens only)</label><input id="slug" type="text" placeholder="adam-schiff"></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>Office (short, for card)</label><input id="office" type="text" placeholder="U.S. Senate · California"></div>
+          <div class="field"><label>Region</label>
+            <select id="region">
+              <option value="bay">Bay Area</option>
+              <option value="norcal">NorCal</option>
+              <option value="central">Central Valley</option>
+              <option value="socal">SoCal</option>
+            </select>
+          </div>
+        </div>
+        <div class="field-row three">
+          <div class="field"><label>Office type</label>
+            <select id="officetype">
+              <option value="congress">U.S. Congress</option>
+              <option value="senate">State Senate</option>
+              <option value="assembly">State Assembly</option>
+              <option value="local">City / Local</option>
+              <option value="state">Statewide office</option>
+            </select>
+          </div>
+          <div class="field"><label>Party</label>
+            <select id="party">
+              <option value="dem">Democrat</option>
+              <option value="rep">Republican</option>
+              <option value="ind">Independent</option>
+            </select>
+          </div>
+          <div class="field"><label>Status</label>
+            <select id="status">
+              <option value="incumbent">Incumbent</option>
+              <option value="challenger">Challenger</option>
+              <option value="open seat">Open seat</option>
+            </select>
+          </div>
+        </div>
+        <div class="field-row full">
+          <div class="field"><label>One-line platform summary (for card)</label><input id="platform_short" type="text" placeholder="Protecting democracy, expanding healthcare access, climate investment..."></div>
+        </div>
+        <div class="field-row full">
+          <div class="field"><label>Top donors summary (for card)</label><input id="donors_short" type="text" placeholder="Lawyers & law firms ($1.2M), Tech ($890k), Finance ($420k)."></div>
+        </div>
+        <div class="field-row full">
+          <div class="field">
+            <label>Featured statement (for card)</label>
+            <input id="statement_short" type="text" placeholder='"Quote here." — Source, Month Year'>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>Last updated</label><input id="updated" type="text" placeholder="Mar 31, 2026"></div>
+          <div class="field"><label>Candidate ID (unique number)</label><input id="cid" type="number" placeholder="10"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Issue tags (select up to 4)</div>
+        <div class="tags-picker" id="tagsPicker"></div>
+        <div class="hint" style="margin-top:10px;font-size:11px;color:rgba(46,42,38,0.4)">Select the 4 most relevant issues for this candidate's card.</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Data sources (for card footer)</div>
+        <div id="sources-card" class="repeatable"></div>
+        <button class="btn-add" onclick="addSourceCard()">+ Add source</button>
+      </div>
+
+      <button class="btn-add" style="margin-top:8px" onclick="goTo('office')">Next: Office & district →</button>
+    </div>
+
+    <!-- 02 OFFICE -->
+    <div class="section-page" id="page-office">
+      <div class="section-title">02 — Office & district</div>
+      <div class="section-sub">Displayed in the profile header and the Office & District section.</div>
+      <div class="card">
+        <div class="card-title">Office details</div>
+        <div class="field-row">
+          <div class="field"><label>Full office title</label><input id="office_title" type="text" placeholder="U.S. Senator, California"></div>
+          <div class="field"><label>District</label><input id="district" type="text" placeholder="Statewide — California"></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>Current term</label><input id="term" type="text" placeholder="2025–2031"></div>
+          <div class="field"><label>Next election</label><input id="next_election" type="text" placeholder="November 2030"></div>
+        </div>
+        <div class="field-row full">
+          <div class="field"><label>Office description (1–2 sentences explaining what this office does)</label><textarea id="office_desc" placeholder="U.S. Senators represent their entire state in the federal legislature. They serve six-year terms, vote on federal legislation, confirm presidential nominees, and ratify treaties."></textarea></div>
+        </div>
+        <div class="field-row three">
+          <div class="field"><label>Official site URL</label><input id="official_site" type="url" placeholder="https://www.schiff.senate.gov"></div>
+          <div class="field"><label>Twitter/X URL</label><input id="twitter" type="url" placeholder="https://twitter.com/SenAdamSchiff"></div>
+          <div class="field"><label>Instagram URL</label><input id="instagram" type="url" placeholder="https://www.instagram.com/adamschiff"></div>
+        </div>
+      </div>
+      <button class="btn-add" onclick="goTo('platform')">Next: Platform →</button>
+    </div>
+
+    <!-- 03 PLATFORM -->
+    <div class="section-page" id="page-platform">
+      <div class="section-title">03 — Platform</div>
+      <div class="section-sub">Add one row per policy topic. Source from the candidate's official website or stated positions.</div>
+      <div class="card">
+        <div class="card-title">Policy positions</div>
+        <div id="platform-rows" class="repeatable"></div>
+        <button class="btn-add" onclick="addPlatform()">+ Add platform item</button>
+      </div>
+      <button class="btn-add" onclick="goTo('voting')">Next: Voting record →</button>
+    </div>
+
+    <!-- 04 VOTING -->
+    <div class="section-page" id="page-voting">
+      <div class="section-title">04 — Voting record</div>
+      <div class="section-sub">Add individual votes. Source every vote from Congress.gov or the CA Legislature website. Paste the direct URL.</div>
+      <div class="card">
+        <div class="card-title">Votes</div>
+        <div id="voting-rows" class="repeatable"></div>
+        <button class="btn-add" onclick="addVote()">+ Add vote</button>
+      </div>
+      <button class="btn-add" onclick="goTo('ratings')">Next: Org ratings →</button>
+    </div>
+
+    <!-- 05 RATINGS -->
+    <div class="section-page" id="page-ratings">
+      <div class="section-title">05 — Organization ratings</div>
+      <div class="section-sub">Scorecards from advocacy organizations. Always link directly to the scorecard page, not the org homepage.</div>
+      <div class="card">
+        <div class="card-title">Ratings</div>
+        <div id="ratings-rows" class="repeatable"></div>
+        <button class="btn-add" onclick="addRating()">+ Add rating</button>
+      </div>
+      <button class="btn-add" onclick="goTo('finance')">Next: Campaign finance →</button>
+    </div>
+
+    <!-- 06 FINANCE -->
+    <div class="section-page" id="page-finance">
+      <div class="section-title">06 — Campaign finance</div>
+      <div class="section-sub">Source from OpenSecrets and FEC.gov. Named donors must come from FEC individual contribution filings.</div>
+      <div class="card">
+        <div class="card-title">Overview</div>
+        <div class="field-row">
+          <div class="field"><label>Total raised</label><input id="finance_total" type="text" placeholder="$32.4M raised (2024 Senate race)"></div>
+          <div class="field"><label>OpenSecrets URL (paste the exact page)</label><input id="finance_url" type="url" placeholder="https://www.opensecrets.org/..."></div>
+        </div>
+        <div class="field-row full">
+          <div class="field"><label>Finance notes</label><textarea id="finance_notes" placeholder="Does not accept corporate PAC money. Source: OpenSecrets / FEC filings."></textarea></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Notable named donors (from FEC filings)</div>
+        <div id="donors-rows" class="repeatable"></div>
+        <button class="btn-add" onclick="addDonor()">+ Add named donor</button>
+      </div>
+      <div class="card">
+        <div class="card-title">Donor industry breakdown</div>
+        <div class="hint" style="margin-bottom:12px">Each row is one industry slice. "Pct" is the percentage of total (whole number, e.g. 14).</div>
+        <div id="finance-rows" class="repeatable"></div>
+        <button class="btn-add" onclick="addFinance()">+ Add industry</button>
+      </div>
+      <button class="btn-add" onclick="goTo('statements')">Next: Statements →</button>
+    </div>
+
+    <!-- 07 STATEMENTS -->
+    <div class="section-page" id="page-statements">
+      <div class="section-title">07 — Statements</div>
+      <div class="section-sub">Direct quotes only. Always paste the exact URL to the original source. Never paraphrase.</div>
+      <div class="card">
+        <div class="card-title">Press statements</div>
+        <div id="statements-rows" class="repeatable"></div>
+        <button class="btn-add" onclick="addStatement('press')">+ Add press statement</button>
+      </div>
+      <div class="card">
+        <div class="card-title">Social media statements</div>
+        <div id="social-rows" class="repeatable"></div>
+        <button class="btn-add" onclick="addStatement('social')">+ Add social media post</button>
+      </div>
+      <button class="btn-add" onclick="goTo('stances')">Next: Issue stances →</button>
+    </div>
+
+    <!-- 08 STANCES -->
+    <div class="section-page" id="page-stances">
+      <div class="section-title">08 — Issue stances</div>
+      <div class="section-sub">All 16 issues are listed below. For each one, describe the candidate's position and check "sourced" if you have a primary source. If no position is found, leave the text blank and uncheck sourced.</div>
+      <div class="card">
+        <div class="card-title">All 16 issues</div>
+        <div id="stances-rows"></div>
+      </div>
+      <button class="btn-add" onclick="goTo('endorsements')">Next: Endorsements →</button>
+    </div>
+
+    <!-- 09 ENDORSEMENTS -->
+    <div class="section-page" id="page-endorsements">
+      <div class="section-title">09 — Endorsements</div>
+      <div class="section-sub">Organizations and individuals who have publicly backed this candidate.</div>
+      <div class="card">
+        <div class="card-title">Endorsements</div>
+        <div id="endorsements-rows" class="repeatable"></div>
+        <button class="btn-add" onclick="addEndorsement()">+ Add endorsement</button>
+      </div>
+      <button class="btn-add" onclick="goTo('elections')">Next: Election history →</button>
+    </div>
+
+    <!-- 10 ELECTIONS -->
+    <div class="section-page" id="page-elections">
+      <div class="section-title">10 — Election history</div>
+      <div class="section-sub">Past races. Most recent first.</div>
+      <div class="card">
+        <div class="card-title">Elections</div>
+        <div id="elections-rows" class="repeatable"></div>
+        <button class="btn-add" onclick="addElection()">+ Add election</button>
+      </div>
+      <button class="btn-add" onclick="goTo('committees')">Next: Committees →</button>
+    </div>
+
+    <!-- 11 COMMITTEES -->
+    <div class="section-page" id="page-committees">
+      <div class="section-title">11 — Committees</div>
+      <div class="section-sub">Current committee assignments. Link to the official committee website.</div>
+      <div class="card">
+        <div class="card-title">Committee assignments</div>
+        <div id="committees-rows" class="repeatable"></div>
+        <button class="btn-add" onclick="addCommittee()">+ Add committee</button>
+      </div>
+      <button class="btn-add" onclick="goTo('watch')">Next: What to watch →</button>
+    </div>
+
+    <!-- 12 WATCH -->
+    <div class="section-page" id="page-watch">
+      <div class="section-title">12 — What to watch</div>
+      <div class="section-sub">Upcoming votes, legislation, or decisions this candidate is involved in.</div>
+      <div class="card">
+        <div class="card-title">Watch items</div>
+        <div id="watch-rows" class="repeatable"></div>
+        <button class="btn-add" onclick="addWatch()">+ Add watch item</button>
+      </div>
+      <button class="btn-add" onclick="goTo('sources')">Next: Sources →</button>
+    </div>
+
+    <!-- 13 SOURCES -->
+    <div class="section-page" id="page-sources">
+      <div class="section-title">13 — All sources</div>
+      <div class="section-sub">Every source used in this profile. Label each one clearly.</div>
+      <div class="card">
+        <div class="card-title">Sources</div>
+        <div id="all-sources-rows" class="repeatable"></div>
+        <button class="btn-add" onclick="addSource()">+ Add source</button>
+      </div>
+      <button class="btn-add" onclick="goTo('generate')">Generate code →</button>
+    </div>
+
+    <!-- GENERATE -->
+    <div class="section-page" id="page-generate">
+      <div class="section-title">Generate</div>
+      <div class="section-sub">When you're ready, click Generate. Copy the output and paste it into candidates.js, replacing or adding to the CANDIDATES array.</div>
+
+      <div class="generate-bar">
+        <div class="generate-bar-text"><strong>Ready to generate?</strong><br>Make sure you've filled in at least the Basics and Office sections before generating.</div>
+        <button class="btn-generate" onclick="generate()">Generate candidate block →</button>
+      </div>
+
+      <div class="output-wrap" id="outputWrap" style="display:none">
+        <div class="output-label">
+          <span>Generated JavaScript — paste into candidates.js</span>
+          <button class="btn-copy" id="copyBtn" onclick="copyOutput()">Copy to clipboard</button>
+        </div>
+        <div class="output-box" id="outputBox"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ── TAG SYSTEM ──
+const ALL_TAGS=['Housing','Environment','Healthcare','Economy','Education','Public Safety','Immigration','Civil Rights','Infrastructure','Foreign Policy','Homelessness','Water & Energy','Reproductive Rights','Gun Policy','Campaign Finance','LGBTQ+ Rights'];
+const TAG_COLORS={'Housing':'#E8D4BC','Environment':'#CCDFD4','Healthcare':'#DDD0E8','Economy':'#F5E4C0','Education':'#C8DDE8','Public Safety':'#F0D8CC','Immigration':'#D8E4CC','Civil Rights':'#E4D4E4','Infrastructure':'#E0DCC8','Foreign Policy':'#D0DCE4','Homelessness':'#ECD8BC','Water & Energy':'#CCE0D8','Reproductive Rights':'#E8CCE0','Gun Policy':'#D8D4E8','Campaign Finance':'#F2DCC8','LGBTQ+ Rights':'#D4C8E8'};
+const TAG_TEXT={'Housing':'#5C2E08','Environment':'#1A3C28','Healthcare':'#38205A','Economy':'#4A3408','Education':'#1A2E40','Public Safety':'#501E10','Immigration':'#243818','Civil Rights':'#3C1C3C','Infrastructure':'#383418','Foreign Policy':'#1C2C3C','Homelessness':'#4A2C08','Water & Energy':'#183428','Reproductive Rights':'#481838','Gun Policy':'#282040','Campaign Finance':'#4C2810','LGBTQ+ Rights':'#2A1454'};
+
+let selectedTags=[];
+const tp=document.getElementById('tagsPicker');
+ALL_TAGS.forEach(t=>{
+  const btn=document.createElement('button');
+  btn.className='tag-btn';
+  btn.textContent=t;
+  btn.style.background=TAG_COLORS[t];
+  btn.style.color=TAG_TEXT[t];
+  btn.style.borderColor=TAG_TEXT[t]+'44';
+  btn.onclick=()=>{
+    if(selectedTags.includes(t)){selectedTags=selectedTags.filter(x=>x!==t);btn.classList.remove('selected');btn.style.opacity='1';}
+    else if(selectedTags.length<4){selectedTags.push(t);btn.classList.add('selected');btn.style.outline='2px solid '+TAG_TEXT[t];}
+    else{alert('Select up to 4 tags.');}
+  };
+  tp.appendChild(btn);
+});
+
+// ── ALL ISSUES for stances ──
+const ALL_ISSUES=['Housing','Homelessness','Healthcare','Environment','Economy','Education','Immigration','Civil Rights','Infrastructure','Foreign Policy','Public Safety','Reproductive Rights','Gun Policy','Water & Energy','Campaign Finance','LGBTQ+ Rights'];
+
+// ── nav ──
+function goTo(page){
+  document.querySelectorAll('.section-page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.sn-item').forEach(a=>a.classList.remove('active'));
+  document.getElementById('page-'+page).classList.add('active');
+  document.querySelectorAll('.sn-item').forEach(a=>{if(a.getAttribute('onclick')&&a.getAttribute('onclick').includes("'"+page+"'"))a.classList.add('active');});
+  window.scrollTo(0,0);
+}
+
+// ── repeatable row builders ──
+function makeRow(container,fields,removeId){
+  const row=document.createElement('div');
+  row.className='repeat-row';
+  const g=document.createElement('div');
+  g.className='repeat-row-grid';
+  g.style.gridTemplateColumns=fields.map(f=>f.w||'1fr').join(' ');
+  fields.forEach(f=>{
+    const wrap=document.createElement('div');
+    wrap.className='field';
+    const lbl=document.createElement('label');
+    lbl.textContent=f.label;
+    wrap.appendChild(lbl);
+    let el;
+    if(f.type==='textarea'){el=document.createElement('textarea');el.rows=3;}
+    else if(f.type==='select'){el=document.createElement('select');(f.options||[]).forEach(o=>{const opt=document.createElement('option');opt.value=o.v||o;opt.textContent=o.l||o;el.appendChild(opt);});}
+    else{el=document.createElement('input');el.type=f.type||'text';}
+    el.placeholder=f.placeholder||'';
+    el.dataset.key=f.key;
+    el.className='row-field';
+    wrap.appendChild(el);
+    g.appendChild(wrap);
+  });
+  row.appendChild(g);
+  const rm=document.createElement('button');
+  rm.className='btn-remove';rm.textContent='Remove';
+  rm.onclick=()=>row.remove();
+  row.appendChild(rm);
+  document.getElementById(container).appendChild(row);
+}
+
+function addPlatform(){makeRow('platform-rows',[{key:'topic',label:'Topic',placeholder:'Healthcare',w:'160px'},{key:'text',label:'Position text',type:'textarea',placeholder:'Supports expanding the ACA...'}]);}
+function addVote(){makeRow('voting-rows',[{key:'bill',label:'Bill name & number',placeholder:'HR 5376 — Inflation Reduction Act'},{key:'vote',label:'Vote',type:'select',options:[{v:'Yes',l:'Yes'},{v:'No',l:'No'}],w:'80px'},{key:'date',label:'Date',placeholder:'Aug 2022',w:'100px'},{key:'description',label:'Description',type:'textarea',placeholder:'What this bill did and why it matters.'},{key:'source',label:'Source name',placeholder:'Congress.gov',w:'120px'},{key:'source_url',label:'Direct source URL (paste exact link)',placeholder:'https://www.congress.gov/bill/...'}]);}
+function addRating(){makeRow('ratings-rows',[{key:'org',label:'Organization',placeholder:'ACLU'},{key:'score',label:'Score',placeholder:'96%',w:'80px'},{key:'year',label:'Year',placeholder:'2023',w:'80px'},{key:'url',label:'Direct scorecard URL',placeholder:'https://www.aclu.org/scorecard'}]);}
+function addDonor(){makeRow('donors-rows',[{key:'name',label:'Donor name',placeholder:'Steven Spielberg'},{key:'type',label:'Type',placeholder:'Individual',w:'110px'},{key:'amt',label:'Amount',placeholder:'$6,600',w:'90px'},{key:'detail',label:'Brief description',type:'textarea',placeholder:'Film director. Maximum individual contribution for the 2024 cycle.'}]);}
+function addFinance(){makeRow('finance-rows',[{key:'src',label:'Industry / category',placeholder:'Lawyers & law firms'},{key:'amt',label:'Amount',placeholder:'$1.2M',w:'90px'},{key:'pct',label:'% of total',placeholder:'14',w:'80px'},{key:'detail',label:'Brief description',type:'textarea',placeholder:'Partners and associates at major California law firms.'}]);}
+function addStatement(type){
+  if(type==='press'){
+    makeRow('statements-rows',[{key:'quote',label:'Direct quote (no quotation marks)',type:'textarea',placeholder:'Democracy is not a spectator sport...'},{key:'source',label:'Publication / source',placeholder:'Los Angeles Times'},{key:'date',label:'Date',placeholder:'Jan 3, 2025',w:'120px'},{key:'url',label:'Direct URL to original article',placeholder:'https://www.latimes.com/...'},{key:'topic',label:'Issue tag',type:'select',options:ALL_TAGS,w:'160px'}]);
+  } else {
+    makeRow('social-rows',[{key:'quote',label:'Direct quote (no quotation marks)',type:'textarea',placeholder:'Proud to vote YES on...'},{key:'platform',label:'Platform',type:'select',options:['Twitter/X','Instagram','Facebook','LinkedIn'],w:'130px'},{key:'date',label:'Date',placeholder:'Aug 2022',w:'110px'},{key:'url',label:'URL to post',placeholder:'https://twitter.com/...'},{key:'topic',label:'Issue tag',type:'select',options:ALL_TAGS,w:'160px'}]);
+  }
+}
+function addEndorsement(){makeRow('endorsements-rows',[{key:'org',label:'Organization or person',placeholder:'SEIU California'},{key:'type',label:'Category',placeholder:'Labor',w:'140px'}]);}
+function addElection(){makeRow('elections-rows',[{key:'year',label:'Year',placeholder:'2024',w:'80px'},{key:'race',label:'Race',placeholder:'U.S. Senate — California'},{key:'result',label:'Result',type:'select',options:['Won','Lost'],w:'90px'},{key:'vote_pct',label:'Vote %',placeholder:'56.4%',w:'80px'},{key:'opponent',label:'Opponent',placeholder:'Steve Garvey (R)'},{key:'notes',label:'Notes',type:'textarea',placeholder:'Context about this race.'}]);}
+function addCommittee(){makeRow('committees-rows',[{key:'name',label:'Committee name',placeholder:'Senate Judiciary Committee'},{key:'role',label:'Role',placeholder:'Member',w:'120px'},{key:'url',label:'Committee website URL',placeholder:'https://www.judiciary.senate.gov'}]);}
+function addWatch(){makeRow('watch-rows',[{key:'item',label:'Item title',placeholder:'Protecting Our Democracy Act (Senate reintroduction)'},{key:'description',label:'Description',type:'textarea',placeholder:'What to watch and why it matters.'}]);}
+function addSource(){makeRow('all-sources-rows',[{key:'name',label:'Source name',placeholder:'Congress.gov — Schiff voting record'},{key:'url',label:'Direct URL',placeholder:'https://www.congress.gov/member/...'}]);}
+function addSourceCard(){makeRow('sources-card',[{key:'name',label:'Source name',placeholder:'OpenSecrets'}]);}
+
+// ── Build stances section ──
+const stancesWrap=document.getElementById('stances-rows');
+ALL_ISSUES.forEach(issue=>{
+  const wrap=document.createElement('div');
+  wrap.style.cssText='padding:12px 0;border-bottom:0.5px solid rgba(46,42,38,0.08)';
+  wrap.innerHTML=`
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+      <div style="font-size:12px;font-weight:600;color:var(--char)">${issue}</div>
+      <label style="display:flex;align-items:center;gap:6px;font-size:11px;color:rgba(46,42,38,0.55);cursor:pointer">
+        <input type="checkbox" data-stance-sourced="${issue}" checked style="width:14px;height:14px;accent-color:var(--terra)">
+        Sourced
+      </label>
+    </div>
+    <textarea data-stance-text="${issue}" rows="2" placeholder="Describe ${issue} position. Leave blank if no position found." style="width:100%;font-family:var(--font-b);font-size:12px;background:var(--cream);border:0.5px solid rgba(46,42,38,0.15);border-radius:6px;padding:8px 10px;resize:vertical;line-height:1.5"></textarea>
+  `;
+  stancesWrap.appendChild(wrap);
+});
+
+// ── helpers ──
+function getRows(containerId){
+  const rows=[];
+  document.querySelectorAll('#'+containerId+' .repeat-row').forEach(row=>{
+    const obj={};
+    row.querySelectorAll('.row-field').forEach(el=>{obj[el.dataset.key]=el.value.trim();});
+    rows.push(obj);
+  });
+  return rows;
+}
+function q(s){return s.replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/\n/g,'\\n');}
+function indent(str,n){return str.split('\n').map(l=>' '.repeat(n)+l).join('\n');}
+
+// ── GENERATE ──
+function generate(){
+  const name=document.getElementById('name').value.trim()||'Unknown';
+  const slug=document.getElementById('slug').value.trim()||'unknown';
+  const office=document.getElementById('office').value.trim();
+  const region=document.getElementById('region').value;
+  const officetype=document.getElementById('officetype').value;
+  const party=document.getElementById('party').value;
+  const status=document.getElementById('status').value;
+  const platform_short=document.getElementById('platform_short').value.trim();
+  const donors_short=document.getElementById('donors_short').value.trim();
+  const statement_short=document.getElementById('statement_short').value.trim();
+  const updated=document.getElementById('updated').value.trim();
+  const cid=document.getElementById('cid').value||'99';
+
+  const tags=selectedTags.map(t=>"'"+t+"'").join(', ');
+
+  const card_sources=getRows('sources-card');
+  const srcLine=card_sources.map(s=>"'"+q(s.name)+"'").join(', ');
+
+  const od={
+    title:document.getElementById('office_title').value.trim(),
+    district:document.getElementById('district').value.trim(),
+    term:document.getElementById('term').value.trim(),
+    next_election:document.getElementById('next_election').value.trim(),
+    desc:document.getElementById('office_desc').value.trim(),
+    site:document.getElementById('official_site').value.trim(),
+    tw:document.getElementById('twitter').value.trim(),
+    ig:document.getElementById('instagram').value.trim(),
+  };
+
+  const platRows=getRows('platform-rows').map(p=>`        { topic: '${q(p.topic)}', text: '${q(p.text)}' },`).join('\n');
+  const voteRows=getRows('voting-rows').map(v=>`        { bill: '${q(v.bill)}', vote: '${v.vote}', date: '${q(v.date)}', description: '${q(v.description)}', source: '${q(v.source)}', source_url: '${q(v.source_url)}', url_verified: false },`).join('\n');
+  const ratingRows=getRows('ratings-rows').map(r=>`        { org: '${q(r.org)}', score: '${q(r.score)}', year: '${q(r.year)}', url: '${q(r.url)}', url_verified: false },`).join('\n');
+  const donorRows=getRows('donors-rows').map(d=>`        { name: '${q(d.name)}', type: '${q(d.type)}', amt: '${q(d.amt)}', detail: '${q(d.detail)}' },`).join('\n');
+  const finRows=getRows('finance-rows').map(f=>`        { amt: '${q(f.amt)}', src: '${q(f.src)}', pct: ${parseInt(f.pct)||0}, detail: '${q(f.detail)}' },`).join('\n');
+
+  const stmtRows=getRows('statements-rows').map(s=>`        { quote: '${q(s.quote)}', source: '${q(s.source)}', date: '${q(s.date)}', url: '${q(s.url)}', url_verified: false, topic: '${q(s.topic)}', type: 'press' },`).join('\n');
+  const socialRows=getRows('social-rows').map(s=>`        { quote: '${q(s.quote)}', platform: '${q(s.platform)}', date: '${q(s.date)}', url: '${q(s.url)}', url_verified: false, topic: '${q(s.topic)}' },`).join('\n');
+
+  let stanceRows='';
+  ALL_ISSUES.forEach(issue=>{
+    const textEl=document.querySelector('[data-stance-text="'+issue+'"]');
+    const srcEl=document.querySelector('[data-stance-sourced="'+issue+'"]');
+    const text=textEl?textEl.value.trim():'';
+    const sourced=srcEl?srcEl.checked:false;
+    const finalText=text||`No public statement or documented position found on ${issue} as of ${updated}.`;
+    stanceRows+=`        { issue: '${issue}', text: '${q(finalText)}', sourced: ${sourced&&text?'true':'false'} },\n`;
+  });
+
+  const endRows=getRows('endorsements-rows').map(e=>`        { org: '${q(e.org)}', type: '${q(e.type)}' },`).join('\n');
+  const elecRows=getRows('elections-rows').map(e=>`        { year: '${q(e.year)}', race: '${q(e.race)}', result: '${q(e.result)}', vote_pct: '${q(e.vote_pct)}', opponent: '${q(e.opponent)}', notes: '${q(e.notes)}' },`).join('\n');
+  const commRows=getRows('committees-rows').map(c=>`        { name: '${q(c.name)}', role: '${q(c.role)}', url: '${q(c.url)}', url_verified: false },`).join('\n');
+  const watchRows=getRows('watch-rows').map(w=>`        { item: '${q(w.item)}', description: '${q(w.description)}' },`).join('\n');
+  const srcRows=getRows('all-sources-rows').map(s=>`        { name: '${q(s.name)}', url: '${q(s.url)}', verified: false },`).join('\n');
+
+  const today=document.getElementById('updated').value.trim()||new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+
+  const out=`  {
+    id: ${cid},
+    name: '${q(name)}',
+    slug: '${slug}',
+    office: '${q(office)}',
+    region: '${region}',
+    officetype: '${officetype}',
+    party: '${party}',
+    status: '${status}',
+    platform: '${q(platform_short)}',
+    donors: '${q(donors_short)}',
+    statement: '${q(statement_short)}',
+    tags: [${tags}],
+    sources: [${srcLine}],
+    updated: '${updated}',
+
+    profile: {
+
+      office_detail: {
+        title: '${q(od.title)}',
+        district: '${q(od.district)}',
+        term: '${q(od.term)}',
+        next_election: '${q(od.next_election)}',
+        office_description: '${q(od.desc)}',
+        official_site: '${od.site}',
+        official_site_verified: false,
+        twitter: '${od.tw}',
+        twitter_verified: false,
+        instagram: '${od.ig}',
+        instagram_verified: false,
+      },
+
+      platform_full: [
+${platRows}
+      ],
+
+      voting_record: [
+${voteRows}
+      ],
+
+      ratings: [
+${ratingRows}
+      ],
+
+      finance_total: '${document.getElementById('finance_total').value.trim()}',
+      finance_source_url: '${document.getElementById('finance_url').value.trim()}',
+      finance_source_verified: false,
+      finance_notable_donors: [
+${donorRows}
+      ],
+      finance_breakdown: [
+${finRows}
+      ],
+      finance_notes: '${q(document.getElementById('finance_notes').value.trim())}',
+
+      statements: [
+${stmtRows}
+      ],
+
+      social_statements: [
+${socialRows}
+      ],
+
+      stances: [
+${stanceRows}      ],
+
+      endorsements: [
+${endRows}
+      ],
+
+      elections: [
+${elecRows}
+      ],
+
+      committees: [
+${commRows}
+      ],
+
+      watch: [
+${watchRows}
+      ],
+
+      archive: [
+        { date: '${today}', entries: ['Profile created via Plainview Candidate Editor.'] },
+      ],
+
+      all_sources: [
+${srcRows}
+      ],
+    },
+
+    full: {
+      voting: 'See full voting record.',
+      finance: [],
+      endorsements: '',
+      stances: [],
+    },
+  },`;
+
+  document.getElementById('outputBox').textContent=out;
+  document.getElementById('outputWrap').style.display='block';
+  document.getElementById('copyBtn').textContent='Copy to clipboard';
+  document.getElementById('copyBtn').classList.remove('copied');
+}
+
+function copyOutput(){
+  const text=document.getElementById('outputBox').textContent;
+  navigator.clipboard.writeText(text).then(()=>{
+    const btn=document.getElementById('copyBtn');
+    btn.textContent='Copied!';
+    btn.classList.add('copied');
+    setTimeout(()=>{btn.textContent='Copy to clipboard';btn.classList.remove('copied');},2000);
+  });
+}
+
+// init
+addPlatform();
+addVote();
+addRating();
+addDonor();
+addFinance();
+addStatement('press');
+addEndorsement();
+addElection();
+addCommittee();
+addWatch();
+addSource();
+addSourceCard();
+</script>
+</body>
+</html>
