@@ -343,7 +343,10 @@ const notableDonors=P.finance_notable_donors.length?
 const finHtml='<div class="ft">Total raised: <strong>'+P.finance_total+'</strong></div>'+notableDonors+'<div class="pie-wrap">'+pieSvg+'<div class="pie-legend">'+legendHtml+'</div></div><div class="fn">'+P.finance_notes+'</div>';
 
 // ── statements ──
-const allS=[...P.statements.map(s=>({...s,social:false})),...P.social_statements.map(s=>({...s,social:true}))];
+const allS = [
+  ...(P.statements ?? []).map(s => ({ ...s, social: false })),
+  ...(P.social_statements ?? []).map(s => ({ ...s, social: true }))
+];
 const statHtml=allS.map(s=>{const sp=s.social?'<span class="socbadge">Social media</span><span class="ss">'+s.platform+'</span>':'<span class="ss">'+s.source+'</span>';return '<div class="si"><div class="sq">"'+s.quote+'"</div><div class="sm2">'+sp+'<span class="sd">· '+s.date+'</span><a class="sl2" href="'+s.url+'" target="_blank" rel="noopener">→ Source</a>'+tg(s.topic)+'</div></div>';}).join('');
 
 // ── stances (all 16) ──
