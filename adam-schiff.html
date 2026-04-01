@@ -122,17 +122,6 @@
 .pie-legend-pct{font-size:10px;color:rgba(46,42,38,0.4);font-family:var(--font-m);margin-left:auto}
 .fn{padding:10px 16px;font-size:10px;color:rgba(46,42,38,0.38);font-family:var(--font-m);line-height:1.6;border-top:0.5px solid rgba(46,42,38,0.07)}
 
-/* statements */
-.si{padding:14px 16px;border-bottom:0.5px solid rgba(46,42,38,0.06)}
-.si:last-child{border-bottom:none}
-.sq{font-size:13px;color:rgba(17,24,39,0.75);line-height:1.72;font-style:italic;margin-bottom:8px}
-.sm2{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.ss{font-size:10px;font-family:var(--font-m);color:rgba(46,42,38,0.42)}
-.sd{font-size:10px;font-family:var(--font-m);color:rgba(46,42,38,0.3)}
-.sl2{font-size:10px;color:var(--terra);text-decoration:none;font-family:var(--font-m)}
-.sl2:hover{text-decoration:underline}
-.socbadge{font-size:9px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;color:rgba(46,42,38,0.35);background:rgba(46,42,38,0.05);border-radius:4px;padding:2px 6px}
-
 /* stances */
 .sti{padding:13px 16px;border-bottom:0.5px solid rgba(46,42,38,0.06);display:grid;grid-template-columns:150px 1fr;gap:16px;align-items:baseline}
 .sti:last-child{border-bottom:none}
@@ -360,12 +349,6 @@ const notableDonors=P.finance_notable_donors.length?
 
 const finHtml='<div class="ft">Total raised: <strong>'+P.finance_total+'</strong></div>'+notableDonors+'<div class="pie-wrap">'+pieSvg+'<div class="pie-legend">'+legendHtml+'</div></div><div class="fn">'+P.finance_notes+'</div>';
 
-// ── statements ──
-const allS = [
-  ...(P.statements ?? []).map(s => ({ ...s, social: false })),
-  ...(P.social_statements ?? []).map(s => ({ ...s, social: true }))
-];
-const statHtml=allS.map(s=>{const sp=s.social?'<span class="socbadge">Social media</span><span class="ss">'+s.platform+'</span>':'<span class="ss">'+s.source+'</span>';return '<div class="si"><div class="sq">"'+s.quote+'"</div><div class="sm2">'+sp+'<span class="sd">· '+s.date+'</span><a class="sl2" href="'+s.url+'" target="_blank" rel="noopener">→ Source</a>'+tg(s.topic)+'</div></div>';}).join('');
 
 // ── stances (all 16) ──
 const stanceHtml=P.stances.map(s=>{let v;if(s.sourced){v='<div class="stv">'+s.text+'</div>';}else{v='<div><div class="npb">No position found</div><div class="npt">'+s.text+'</div></div>';}return '<div class="sti"><div class="stk">'+s.issue+'</div>'+v+'</div>';}).join('');
